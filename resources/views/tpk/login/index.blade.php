@@ -24,7 +24,7 @@
             <img src="{{ asset('assets/tpk/img/logo.png') }}" alt="logo" width="75px">
         </div>
         <div class="section mb-5 p-2">
-
+            <div id="alert" class="alert alert-danger d-none mb-2">Email Atau Password Salah!</div>
             <form id="login">
                 <div class="card">
                     <div class="card-body pb-1">
@@ -53,7 +53,8 @@
                     <div><a href="app-forgot-password.html" class="text-muted">Lupa Password?</a></div>
                 </div>
                 <div class="form-button-group  transparent">
-                    <button type="submit" class="btn btn-primary btn-block btn-lg">Masuk</button>
+                    @include('components._loading')
+                    <button id="btn_login" type="submit" class="btn btn-primary btn-block btn-lg">Masuk</button>
                 </div>
             </form>
         </div>
@@ -91,14 +92,27 @@
                 cache: false,
             };
 
+            loading(true);
             await transAjax(param).then((res) => {
-                console.log(res);
-                // localStorage.setItem("auth_token", res.access_token);
+                loading(false);
                 document.cookie = `access_tokenku=${res.access_token}`;
                 swal({text: 'Anda berhasil login', icon: 'success', timer: 3000,}).then(() => {
                     window.location.href = '/tpk/dashboard';
                 });
+            }).catch((err) => {
+                $('#alert').removeClass('d-none');
+                loading(false);
             });
+
+            function loading(state) {
+                if(state) {
+                    $('#btn_login').addClass('d-none');
+                    $('#loading').removeClass('d-none');
+                } else {
+                    $('#btn_login').removeClass('d-none');
+                    $('#loading').addClass('d-none');
+                }
+            }
         });
     </script>
 </body>

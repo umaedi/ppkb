@@ -111,7 +111,7 @@
                         </div>
                         <div class="input-wrapper">
                             <label for="#">Tgl Kunjungan</label>
-                            <input type="date" class="form-control" name="kunjungan" required>
+                            <input type="date" class="form-control" name="tgl_kunjungan" required>
                             <i class="clear-input">
                                 <ion-icon name="close-circle"></ion-icon>
                             </i>

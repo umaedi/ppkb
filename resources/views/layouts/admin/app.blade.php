@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>{{ $data['title'] }} - {{ $data['judul'] }}</title>
-    <script defer data-api="/stats/api/event" data-domain="preview.tabler.io" src="stats/js/script.js"></script>
+    <script defer data-api="/stats/api/event" data-domain="preview.tabler.io" src="{{ asset('assets/administrator/stats/js/script.js') }}"></script>
     <meta name="msapplication-TileColor" content=""/>
     <meta name="theme-color" content=""/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -52,7 +52,7 @@
       	font-feature-settings: "cv03", "cv04", "cv11";
       }
     </style>
-	<script src="{{ asset('assets/tpk/js/jquery-3.3.1.min.js') }}"></script>
+	<script src="{{ asset('assets/tpk/js/jquery-3.4.1.min.js') }}"></script>
 	<script>
 		function getToken() {
 			var name = 'access_tokenku';
