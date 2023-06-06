@@ -1,5 +1,5 @@
-<button class="btn btn-primary btn-block btn-lg mb-2 d-none" id="loading" type="button" disabled>
+<button class="btn btn-danger btn-block d-none" id="loading" type="button">
     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
     Tunggu sebentar yah...
-  </button>
+</button>
   

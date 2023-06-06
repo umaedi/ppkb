@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\Tbl_user_tpk as User;
-use App\Models\Tbl_wilayah as Wilayah;
 use Illuminate\Http\Request;
+use App\Mail\ResetPasswordMail;
+use App\Models\Tbl_user_tpk as User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Tbl_wilayah as Wilayah;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
-use App\Mail\ResetPasswordMail;
 use App\Http\Controllers\Api as Controller;
 
 class AuthTpkController extends Controller
@@ -126,6 +127,9 @@ class AuthTpkController extends Controller
 
     public function destroy(Request $request)
     {
+        Auth::guard('tpk')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         $request->user()->currentAccessToken()->delete();
         return $this->sendResponseOk(null);
     }

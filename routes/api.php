@@ -61,6 +61,12 @@ Route::group(['middleware' => 'auth:sanctum',], function () {
 
 			//data dashboard
 			Route::get('/data_dashboard', [\App\Http\Controllers\Api\Tpk\DatadashboardController::class, 'index']);
+
+			//profile
+			Route::post('/profile/update', [\App\Http\Controllers\Api\Tpk\ProfileControlleer::class, 'index']);
+
+			//destroy
+			Route::post('/destroy', [\App\Http\Controllers\Auth\AuthTpkController::class, 'destroy']);
 		});
 	});
 

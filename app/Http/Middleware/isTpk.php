@@ -16,7 +16,7 @@ class isTpk
      */
     public function handle(Request $request, Closure $next)
     {
-        if (isset($_COOKIE['access_tokenku'])) {
+        if (isset($_COOKIE['access_tokenku']) && auth()->guard('tpk')->user()) {
             return $next($request, $_COOKIE['access_tokenku']);
         } else {
             return redirect('/login');
