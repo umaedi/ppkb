@@ -12,4 +12,10 @@ class CatinController extends Controller
         $data['title'] = 'Data Catin';
         return view('tpk.catin.index', $data);
     }
+
+    public function histories()
+    {
+        $data['title'] = 'Data Riwayat Catin';
+        return view('tpk.catin.histories', $data);
+    }
 }

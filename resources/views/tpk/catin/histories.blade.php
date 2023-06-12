@@ -1,33 +1,13 @@
 @extends('layouts.tpk.app')
 @section('content')
 <div id="appCapsule">
-    <div class="section my-3">
-        <div class="card">
-            <div class="card-body">
-                    <div class="row">
-                        <div class="form-group boxed">
-                            <div class="input-wrapper">
-                                <input type="text" class="form-control"  id="search" placeholder="Cari berdasarkan nama..." name="q">
-                            </div>
-                        </div>
-                        <div class="form-group boxed">
-                            <select class="form-control custom-select"  id="perPage">
-                                <option value="">--Perhalaman--</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="50">50</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mt-3">
-            @include('components._loading')
-            <div class="table-responsive" id="data-table">
-                
-            </div>
-        </div>
+    <div class="section my-3" id="catinHistories">
+        <button class="btn btn-primary btn-block btn-lg mb-2 d-none" id="loading" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Tunggu sebentar yah...
+        </button>
     </div>
+</div>
 </div>
 @endsection
 @push('js')
@@ -61,20 +41,14 @@
     async function loadData()
         {
             var param = {
-                url: '/api/tpk/catin',
+                url: "/api/tpk/catin/histories/{{ request('kode_catin') }}",
                 method: 'GET',
-                data: {
-                    load: 'table',
-                    page: page,
-                    paginate: paginate,
-                    search: search,
-                }
             }
 
             loading(true);
             await transAjax(param).then((result) => {
                 loading(false);
-                $('#data-table').html(result);
+                $('#catinHistories').html(result);
                 showData();
             });
         }

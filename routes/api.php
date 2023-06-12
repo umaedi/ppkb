@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth:sanctum',], function () {
 			Route::get('/catin', [\App\Http\Controllers\Api\Tpk\CatinController::class, 'index']);
 			Route::get('/catin/show/{id}', [\App\Http\Controllers\Api\Tpk\CatinController::class, 'show']);
 			Route::post('/catin/update/{id}', [\App\Http\Controllers\Api\Tpk\CatinController::class, 'update']);
+			Route::get('/catin/histories/{kode_catin}', [\App\Http\Controllers\Api\Tpk\CatinController::class, 'histories']);
 
 			//bumil
 			Route::get('/bumil', [\App\Http\Controllers\Api\Tpk\BumilController::class, 'index']);

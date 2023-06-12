@@ -13,10 +13,10 @@ class DatadashboardController extends Controller
 {
     public function index()
     {
-        $data['catin']  = Tbl_catin::count();
-        $data['bumil']  = Tbl_bumil::count();
-        $data['pps']    = Tbl_pasca_persalinan::count();
-        $data['baduta']    = Tbl_baduta::count();
+        $data['catin']  = Tbl_catin::where('wilayah_id', auth()->guard('tpk')->user()->wilayah_id)->where('kunjungan', 1)->count();
+        $data['bumil']  = Tbl_bumil::where('wilayah_id', auth()->guard('tpk')->user()->wilayah_id)->count();
+        $data['pps']    = Tbl_pasca_persalinan::where('wilayah_id', auth()->guard('tpk')->user()->wilayah_id)->count();
+        $data['baduta']    = Tbl_baduta::where('wilayah_id', auth()->guard('tpk')->user()->wilayah_id)->count();
         return $this->sendResponseOk($data);
     }
 }

@@ -40,6 +40,7 @@ Route::middleware(['auth' => 'tpk'])->group(function () {
 		Route::controller(\App\Http\Controllers\Tpk\CatinController::class)->group(function () {
 			Route::get('/catin', 'index')->name('tpk.catin.index');
 			Route::get('/catin/show', 'show')->name('tpk.catin.show');
+			Route::get('/catin/histories', 'histories')->name('tpk.catin.histories');
 		});
 
 		//bumil

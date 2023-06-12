@@ -10,7 +10,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $data['title'] = 'E-CATIN';
+        $data['title']  = 'E-CATIN';
         return view('tpk.dashboard.index', $data);
     }
 }

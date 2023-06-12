@@ -5,7 +5,7 @@
                 <div class="wallet-card">
                     <div class="balance">
                         <div class="left">
-                            <span class="title">Hallo</span>
+                            <span class="title">Anda login sebagai user TPK {{ auth()->guard('tpk')->user()->wilayah_id }}</span>
                             <h1 class="total">{{ Auth::guard('tpk')->user()->nama }}</h1>
                         </div>
                         {{-- <div class="right">
@@ -112,7 +112,7 @@
                         <a href="{{ route('tpk.catin.index') }}">
                         <div class="stat-box">
                             <div class="title">CATIN</div>
-                            <div id="data_catin" class="value text-danger">0</div>
+                            <div id="data_catin" class="value text-danger">--</div>
                         </div>
                         </a>
                     </div>
@@ -120,7 +120,7 @@
                         <a href="{{ route('tpk.pps.index') }}">
                             <div class="stat-box">
                                 <div class="title">PPS</div>
-                                <div id="data_pps" class="value text-success">0</div>
+                                <div id="data_pps" class="value text-success">--</div>
                             </div>
                         </a>
                     </div>
@@ -130,7 +130,7 @@
                         <a href="{{ route('tpk.bumil.index') }}">
                         <div class="stat-box">
                             <div class="title">BUMIL</div>
-                            <div class="value"><span id="data_bumil" class="text-primary">0</span></div>
+                            <div class="value"><span id="data_bumil" class="text-primary">--</span></div>
                         </div>
                         </a>
                     </div>
@@ -138,7 +138,7 @@
                         <a href="{{ route('tpk.baduta.index') }}">
                             <div class="stat-box">
                                 <div class="title">BADUTA</div>
-                                <div class="value"><span class="text-warning" id="data_baduta">0</span></div>
+                                <div class="value"><span class="text-warning" id="data_baduta">--</span></div>
                             </div>
                         </a>
                     </div>

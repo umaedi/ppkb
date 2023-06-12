@@ -11,7 +11,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'PPKB' }}</title>
     <meta name="description" content="Finapp HTML Mobile Template">
-    <meta name="keywords" content="bootstrap, wallet, banking, fintech mobile template, cordova, phonegap, mobile, html, responsive" />
     <link rel="icon" type="image/png" href="assets/tpk/img/favicon.png" sizes="32x32">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/tpk/img/icon/192x192.png') }}">
     <link rel="stylesheet" href="{{ asset('assets/tpk/css/style.css') }}">
@@ -92,10 +91,13 @@
                 cache: false,
             };
 
+            var now = new Date();
+            var time = now.getTime() + 86400;
+
             loading(true);
             await transAjax(param).then((res) => {
                 loading(false);
-                document.cookie = `access_tokenku=${res.access_token}`;
+                document.cookie = `access_tokenku=${res.access_token}`, + time;
                 swal({text: 'Anda berhasil login', icon: 'success', timer: 3000,}).then(() => {
                     window.location.href = '/tpk/dashboard';
                 });

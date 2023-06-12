@@ -49,6 +49,24 @@
             })
         return html
     }
+
+    //get wilayah
+    async function getWilayah(el)
+    {
+        var element = el;
+        var param = {
+            method: 'GET',
+            url: '/api/tpk/wilayah',
+        }
+
+        await transAjax(param).then((res) => {
+            res.data.forEach(el => {
+                $('#'+element).append(`
+                    <option value="${el.id}">${el.nama}</option>      
+                `);
+            });
+        });
+    }
     </script>
     @stack('js')
 </body>

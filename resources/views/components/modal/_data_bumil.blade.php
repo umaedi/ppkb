@@ -32,6 +32,12 @@
                                 </i>
                             </div>
                             <div class="input-wrapper mb-2">
+                                <label for="wBumil">Kecamatan</label>
+                                <select id="wBumil" class="w-catin form-control custom-select" name="wilayah_id" required onclick="getWilayah('wBumil')">
+                                    <option value="0">--Pilih--</option>
+                                </select>
+                            </div>
+                            <div class="input-wrapper mb-2">
                                 <label for="">Tgl Lahir Ibu</label>
                                 <input type="date" class="form-control" name="tgl_lahir" required>
                                 <i class="clear-input">

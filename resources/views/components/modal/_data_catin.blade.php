@@ -53,8 +53,8 @@
                             </i>
                         </div>
                         <div class="input-wrapper mb-2">
-                            <label for="wilayah">Kecamatan</label>
-                            <select id="wilayah" class="form-control custom-select" name="wilayah_id" required>
+                            <label for="wCatin">Kecamatan</label>
+                            <select id="wCatin" class="w-catin form-control custom-select" name="wilayah_id" required onclick="getWilayah('wCatin')">
                                 <option value="0">--Pilih--</option>
                             </select>
                         </div>
@@ -111,7 +111,7 @@
                         </div>
                         <div class="input-wrapper">
                             <label for="#">Tgl Kunjungan</label>
-                            <input type="date" class="form-control" name="tgl_kunjungan" required>
+                            <input type="date" class="form-control" name="tgl_pendampingan" required>
                             <i class="clear-input">
                                 <ion-icon name="close-circle"></ion-icon>
                             </i>
@@ -262,21 +262,6 @@
 </div>
 @push('js')
 <script type="text/javascript">
-    $(document).ready(async function wilayah() {
-        var param = {
-            method: 'GET',
-            url: '/api/tpk/wilayah',
-        }
-
-        await transAjax(param).then((res) => {
-            res.data.forEach(el => {
-                $('#wilayah').append(`
-                    <option value="${el.id}">${el.nama}</option>      
-                `);
-            });
-        });
-    });
-
     $('#catinStore').submit(async function store(e) {
         e.preventDefault();
 

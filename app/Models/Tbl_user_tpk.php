@@ -13,14 +13,14 @@ use Laravel\Sanctum\HasApiTokens;
 class Tbl_user_tpk extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-	
-	protected $guard = 'tpk';
-	
-	protected $table = 'tbl_user_tpk';
-	
-	protected $primaryKey = 'id';
-	
-	protected $fillable = [
+
+    protected $guard = 'tpk';
+
+    protected $table = 'tbl_user_tpk';
+
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
         'wilayah_id',
         'nama',
         'nip',
@@ -33,15 +33,18 @@ class Tbl_user_tpk extends Authenticatable
         'device_token',
         'token_reset',
     ];
-	
-	protected $hidden = [
+
+    protected $hidden = [
         'password',
         'remember_token',
     ];
-	
-	protected $casts = [
+
+    protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-	
-	
+
+    public function tbl_wilayah()
+    {
+        return $this->belongsTo(Tbl_wilayah::class);
+    }
 }

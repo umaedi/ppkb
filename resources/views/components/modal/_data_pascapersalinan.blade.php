@@ -38,6 +38,12 @@
                                 </i>
                             </div>
                             <div class="input-wrapper mb-2">
+                                <label for="wPps">Kecamatan</label>
+                                <select id="wPps" class="w-catin form-control custom-select" name="wilayah_id" required onclick="getWilayah('wPps')">
+                                    <option value="0">--Pilih--</option>
+                                </select>
+                            </div>
+                            <div class="input-wrapper mb-2">
                                 <label for="">No HP (WA)</label>
                                 <input type="number" class="form-control" name="no_tlp">
                                 <i class="clear-input">
