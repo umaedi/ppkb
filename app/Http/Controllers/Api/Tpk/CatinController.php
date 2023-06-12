@@ -105,6 +105,26 @@ class CatinController extends Controller
             $data['wilayah_id'] = $catin->wilayah_id;
         };
 
+        $usia_catin_pria =  date('Y') - substr($data['tgl_lahir_catin_pria'], 0, 4);
+        if ($usia_catin_pria >= 25) {
+            $data['status_usia_catin_pria'] = 1;
+        } else {
+            $data['status_usia_catin_pria'] = 2;
+        }
+
+        $usia_catin_wanita =  date('Y') - substr($data['tgl_lahir_catin_wanita'], 0, 4);
+        if ($usia_catin_wanita >= 25) {
+            $data['status_usia_catin_wanita'] = 1;
+        } else {
+            $data['status_usia_catin_wanita'] = 2;
+        }
+
+        if ($data['merokok_pria'] == 1) {
+            $data['status_resiko'] = 1;
+        } else {
+            $data['status_resiko'] = 2;
+        }
+
         DB::beginTransaction();
 
         try {
