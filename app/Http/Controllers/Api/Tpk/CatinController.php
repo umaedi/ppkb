@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Api\Tpk;
 use App\Models\Tbl_catin;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Api as Controller;
 use App\Services\CatinService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Api as Controller;
 
 class CatinController extends Controller
 {
@@ -42,7 +43,7 @@ class CatinController extends Controller
             $kode_catin = $data_catin->kode_catin;
         }
 
-        $data = $request->except('_token');
+        $data = $request->except('_token', 'type_data', 'id_pendampingan');
 
         $usia_catin_pria =  date('Y') - substr($data['tgl_lahir_catin_pria'], 0, 4);
         if ($usia_catin_pria >= 25) {
@@ -82,7 +83,8 @@ class CatinController extends Controller
             $this->catin->store($data);
         } catch (\Throwable $th) {
             DB::rollBack();
-            return $this->sendResponseError(json_encode($th));
+            Log::error($th->getMessage());
+            return $this->sendResponseError($th->getMessage());
         }
 
         DB::commit();
@@ -95,43 +97,21 @@ class CatinController extends Controller
         return view('tpk.catin._show_data', $data);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_pendampingan)
     {
-        $catin = $this->catin->find($id);
 
-        $data = $request->except('_token');
+        $data = $request->except('_token', 'id_pendampingan', 'type_data');
 
-        if ($data['wilayah_id'] == null) {
-            $data['wilayah_id'] = $catin->wilayah_id;
-        };
-
-        $usia_catin_pria =  date('Y') - substr($data['tgl_lahir_catin_pria'], 0, 4);
-        if ($usia_catin_pria >= 25) {
-            $data['status_usia_catin_pria'] = 1;
-        } else {
-            $data['status_usia_catin_pria'] = 2;
-        }
-
-        $usia_catin_wanita =  date('Y') - substr($data['tgl_lahir_catin_wanita'], 0, 4);
-        if ($usia_catin_wanita >= 25) {
-            $data['status_usia_catin_wanita'] = 1;
-        } else {
-            $data['status_usia_catin_wanita'] = 2;
-        }
-
-        if ($data['merokok_pria'] == 1) {
-            $data['status_resiko'] = 1;
-        } else {
-            $data['status_resiko'] = 2;
-        }
+        $data['tgl_lahir_catin_pria'] = \Carbon\Carbon::parse($request->tgl_lahir_catin_pria)->format('Y-m-d');
+        $data['tgl_lahir_catin_wanita'] = \Carbon\Carbon::parse($request->tgl_lahir_catin_wanita)->format('Y-m-d');
 
         DB::beginTransaction();
-
         try {
-            $this->catin->update($id, $data);
+            $this->catin->update($id_pendampingan, $data);
         } catch (\Throwable $th) {
             DB::rollBack();
-            return $this->sendResponseError(json_encode($th->getMessage()));
+            Log::error($th->getMessage());
+            return $this->sendResponseError($th->getMessage());
         }
 
         DB::commit();
@@ -142,6 +122,33 @@ class CatinController extends Controller
     {
         $data['catin']  = $this->catin->Query()->where('kode_catin', $kode_catin)->first();
         $data['table'] = $this->catin->Query()->where('kode_catin', $kode_catin)->get();
-        return view('tpk.catin._data_histories', $data);
+        return view('tpk.catin._data_table_histories', $data);
+    }
+
+    public function delete($id)
+    {
+        $catin = $this->catin->find($id);
+        if ($catin->kunjungan == 1) {
+            return $this->sendResponseError('Mohon maaf kunjungan pertama tidak dapat dihapus');
+        }
+
+        try {
+            $this->catin->delete($id);
+        } catch (\Throwable $th) {
+            return $this->sendResponseDelete($th);
+        }
+
+        return $this->sendResponseDelete($id);
+    }
+
+    public function destroy($kode_catin)
+    {
+        try {
+            $this->catin->destroy($kode_catin);
+        } catch (\Throwable $th) {
+            return $this->sendResponseDelete($th);
+        }
+
+        return $this->sendResponseDelete($kode_catin);
     }
 }

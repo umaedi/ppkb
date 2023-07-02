@@ -12,4 +12,10 @@ class BadutaController extends Controller
         $data['title'] = 'Data Baduta';
         return view('tpk.baduta.index');
     }
+
+    public function histories()
+    {
+        $data['title'] = 'Riwayat Data Baduta';
+        return view('tpk.baduta.histories');
+    }
 }

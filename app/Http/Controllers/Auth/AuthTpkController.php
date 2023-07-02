@@ -48,7 +48,7 @@ class AuthTpkController extends Controller
             $user = User::where('email', $request->email)->first();
         }
 
-
+        saveLogs('berhasil login', 'aktivitas');
         $token = $user->createToken('auth_token', ['tpk'])->plainTextToken;
         return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
     }
@@ -76,6 +76,7 @@ class AuthTpkController extends Controller
             //     return $this->sendResponseCustom('Kami telah mengirimkan link untuk reset password ke email Anda. Cek folder inbox atau spam untuk menemukannya.', false);
             // }
         }
+        saveLogs('Forgot password email tdk ditemukan', 'event');
         return $this->sendResponseError('Upps. Email tidak di temukan!', null);
     }
 
@@ -102,9 +103,11 @@ class AuthTpkController extends Controller
                     'password'  => Hash::make($request->password),
                     'token_reset'    => sha1(rand()),
                 ]);
+                saveLogs('User TPK Berhasil mengubah password', 'event');
                 return $this->sendResponseCustom('Password berhasil di ubah', true);
             }
         }
+        saveLogs('User TPK gagal mengubah password', 'event');
         return $this->sendResponseError('Upps. Email tidak di temukan!');
     }
 
@@ -131,6 +134,7 @@ class AuthTpkController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         $request->user()->currentAccessToken()->delete();
+        saveLogs('logout sistem', 'aktivitas');
         return $this->sendResponseOk(null);
     }
 }

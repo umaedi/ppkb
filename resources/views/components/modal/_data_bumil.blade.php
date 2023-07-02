@@ -12,7 +12,7 @@
                             <div class="input-wrapper">
                                 <h5 class="p-1 mb-2 bg-secondary text-white rounded">A. BIODATA IBU HAMIL</h5>
                                 <label for="">NIK</label>
-                                <input type="number" class="form-control" name="nik" required>
+                                <input type="number" class="form-control mb-2" name="nik" required>
                                 <i class="clear-input">
                                     <ion-icon name="close-circle"></ion-icon>
                                 </i>
@@ -26,7 +26,7 @@
                             </div>
                             <div class="input-wrapper mb-2">
                                 <label for="">Alamat</label>
-                                <input type="text" class="form-control" name="alamat" required>
+                                <textarea class="form-control" name="alamat" required></textarea>
                                 <i class="clear-input">
                                     <ion-icon name="close-circle"></ion-icon>
                                 </i>
@@ -269,7 +269,7 @@
             loadingsubmit(true);
             await transAjax(param).then((res) => {
                 loadingsubmit(false);
-                swal({text: err.message, icon: 'success', timer: 3000,});
+                swal({text: res.message, icon: 'success', timer: 3000,});
                 $('#bumil').modal('hide');
                 swal({text: res.message, icon: 'success', timer: 3000,}).then(() => {
                     window.location.href = '/tpk/dashboard';
@@ -277,7 +277,7 @@
             }).catch((err) => {
                 loadingsubmit(false);
                 $('#bumil').modal('hide');
-                swal({text: err.message, icon: 'error', timer: 3000,});
+                swal({text: err.responseJSON.message.errorInfo[2], icon: 'error', timer: 3000,});
             });
 
         function loadingsubmit(state){

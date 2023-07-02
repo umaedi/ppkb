@@ -13,4 +13,10 @@ class BumilController extends Controller
         $data['title'] = 'Data Ibu Hamil';
         return view('tpk.bumil.index', $data);
     }
+
+    public function histories()
+    {
+        $data['title'] = 'Data Riwayat Ibu Hamil';
+        return view('tpk.bumil.histories', $data);
+    }
 }

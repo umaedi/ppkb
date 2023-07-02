@@ -1,114 +1,23 @@
-<form id="catinUpdate">
+<form id="updatePendampingan">
+    <input type="hidden" name="id_pendampingan" value="{{ $catin->id }}">
+    <input type="hidden" name="nik_catin_pria" value="{{ $catin->nik_catin_pria }}">
+    <input type="hidden" value="{{ $catin->nama_catin_pria }}" name="nama_catin_pria">
+    <input type="hidden" value="{{ $catin->nik_catin_pria }}" name="nik_catin_pria">
+    <input type="hidden" value="{{ $catin->tgl_lahir_catin_pria }}" name="tgl_lahir_catin_pria">
+    <input type="hidden" value="{{ $catin->telp_catin_pria }}" name="telp_catin_pria">
+    <input type="hidden" name="alamat_catin_pria" value="{{ $catin->alamat_catin_pria }}">
+    
+    <input type="hidden" value="{{ $catin->nama_catin_wanita }}" name="nama_catin_wanita">
+    <input type="hidden" value="{{ $catin->nik_catin_wanita }}" name="nik_catin_wanita">
+    <input type="hidden" value="{{ $catin->tgl_lahir_catin_wanita }}" name="tgl_lahir_catin_wanita">
+    <input type="hidden" value="{{ $catin->tempat_lahir_catin_wanita }}" name="tempat_lahir_catin_wanita">
+    <input type="hidden" value="{{ $catin->telp_catin_wanita }}" name="telp_catin_wanita">
+    <input type="hidden" value="{{ $catin->tgl_pernikahan }}" name="tgl_pernikahan">
+    <input type="hidden" value="{{ $catin->tgl_pendampingan }}" name="tgl_pendampingan">
+    <input type="hidden" name="alamat_catin_wanita" value="{{ $catin->alamat_catin_wanita }}">
+
     <div class="form-group boxed">
-        <div class="input-wrapper mb-2">
-            <h5 class="p-1 mb-2 bg-secondary text-white rounded">BIODATA CATIN PRIA</h5>
-            <label for="name">Nama Lengkap</label>
-            <input type="hidden" name="id" value="{{ $catin->id }}">
-            <input type="text" class="form-control" id="name" name="nama_catin_pria" required value="{{ $catin->nama_catin_pria }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper mb-2">
-            <label for="nik">NIK</label>
-            <input type="number" class="form-control" id="nik" name="nik_catin_pria" required value="{{ $catin->nik_catin_pria }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper mb-2">
-            <label for="alamat_catin_pria">Tempat Lahir</label>
-            <input type="text" class="form-control" name="alamat_catin_pria" required value="{{ $catin->alamat_catin_pria }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper mb-2">
-            <label for="tgl_lahir_catin_pria">Tgl Lahir</label>
-            <input type="date" class="form-control" name="tgl_lahir_catin_pria" required value="{{ $catin->tgl_lahir_catin_pria }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper mb-2">
-            <label for="telp_catin_pria">No HP (WA)</label>
-            <input type="number" class="form-control" name="telp_catin_pria" required value="{{ $catin->telp_catin_pria }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper mb-2">
-            <label for="textarea4">Alamat</label>
-            <textarea id="textarea4" rows="2" class="form-control" name="alamat_catin_pria" required>{{ $catin->alamat_catin_pria }}</textarea>
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper mb-2">
-            <label for="wilayah">Kecamatan</label>
-            <select id="wilayah" class="form-control custom-select" name="wilayah_id">
-                <option value="">--Pilih--</option>
-            </select>
-        </div>
-        <div class="input-wrapper mb-2">
-            <h5 class="p-1 mb-2 bg-secondary text-white rounded">BIODATA CATIN WANITA</h5>
-            <label for="nama_catin_wanita">Nama Lengkap</label>
-            <input type="text" class="form-control" id="nama_catin_wanita" name="nama_catin_wanita" required value="{{ $catin->nama_catin_wanita }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper mb-2">
-            <label for="nik_catin_wanita">NIK</label>
-            <input type="number" class="form-control" name="nik_catin_wanita" required value="{{ $catin->nik_catin_wanita }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper mb-2">
-            <label for="tempat_lahir_catin_wanita">Tempat Lahir</label>
-            <input type="text" class="form-control" name="tempat_lahir_catin_wanita" required value="{{ $catin->tempat_lahir_catin_wanita }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper mb-2">
-            <label for="tgl_lahir_catin_wanita">Tgl Lahir</label>
-            <input type="date" class="form-control" name="tgl_lahir_catin_wanita" required value="{{ $catin->tgl_lahir_catin_wanita }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper mb-2">
-            <label for="telp_catin_wanita">No HP (WA)</label>
-            <input type="number" class="form-control" id="telp_catin_wanita" name="telp_catin_wanita" required value="{{ $catin->telp_catin_wanita }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper mb-2">
-            <label for="textarea4">Alamat</label>
-            <textarea id="textarea4" rows="2" class="form-control" name="alamat_catin_wanita"
-            required>{{ $catin->alamat_catin_wanita }}</textarea>
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper mb-2">
-            <label for="#">Tgl Rencana Pernikahan</label>
-            <input type="date" class="form-control" name="tgl_pernikahan" required value="{{ $catin->tgl_pernikahan }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper">
-            <label for="#">Tgl Kunjungan</label>
-            <input type="date" class="form-control" name="tgl_pendampingan" required value="{{ $catin->tgl_pendampingan }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="section full mt-2 mb-2">
+        <div class="section full mb-2">
             <h5 class="p-1 mb-2 bg-secondary text-white rounded">HASIL PEMERIKSAAN KESEHATAN CATIN PRIA</h5>
             <div class="wide-block p-0">
                 <div class="section-title">Apakah Merokok</div>
@@ -165,11 +74,11 @@
                 <div class="section-title">Apakah Terpapar Rokok</div>
                 <div class="input-list">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="terpapar_rokok" id="radioList2" value="1" {{ $catin->merokok_pria == '1' ? 'checked' : '' }}>
+                        <input class="form-check-input" type="radio" name="terpapar_rokok" id="radioList2" value="1" {{ $catin->terpapar_rokok == '1' ? 'checked' : '' }}>
                         <label class="form-check-label" for="radioList2">Ya</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="terpapar_rokok" id="radioList2.1" value="2" {{ $catin->merokok_pria == '2' ? 'checked' : '' }}>
+                        <input class="form-check-input" type="radio" name="terpapar_rokok" id="radioList2.1" value="2" {{ $catin->terpapar_rokok == '2' ? 'checked' : '' }}>
                         <label class="form-check-label" for="radioList2.1">Tidak</label>
                     </div>
                 </div>
@@ -180,11 +89,11 @@
                     <div class="section-title">Memberikan penyuluhan/KIE</div>
                     <div class="input-list">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="kie_pria" id="radioList3" value="1" {{ $catin->merokok_pria == '1' ? 'checked' : '' }}>
+                            <input class="form-check-input" type="radio" name="kie_pria" id="radioList3" value="1" {{ $catin->kie_pria == '1' ? 'checked' : '' }}>
                             <label class="form-check-label" for="radioList3">Ya</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="kie_pria" id="radioList3.1" value="2" {{ $catin->merokok_pria == '2' ? 'checked' : '' }}>
+                            <input class="form-check-input" type="radio" name="kie_pria" id="radioList3.1" value="2" {{ $catin->kie_pria == '2' ? 'checked' : '' }}>
                             <label class="form-check-label" for="radioList3.1">Tidak</label>
                         </div>
                     </div>
@@ -196,11 +105,11 @@
                     <div class="section-title">Memberikan penyuluhan/KIE</div>
                     <div class="input-list">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="kie_wanita" id="radioList4" value="1" {{ $catin->merokok_pria == '1' ? 'checked' : '' }}>
+                            <input class="form-check-input" type="radio" name="kie_wanita" id="radioList4" value="1" {{ $catin->kie_wanita == '1' ? 'checked' : '' }}>
                             <label class="form-check-label" for="radioList4">Ya</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="kie_wanita" id="radioList4.1" value="2" {{ $catin->merokok_pria == '2' ? 'checked' : '' }}>
+                            <input class="form-check-input" type="radio" name="kie_wanita" id="radioList4.1" value="2" {{ $catin->kie_wanita == '2' ? 'checked' : '' }}>
                             <label class="form-check-label" for="radioList4.1">Tidak</label>
                         </div>
                     </div>
@@ -209,11 +118,11 @@
                     <div class="section-title">Apakah (sasaran) sudah mendapatkan suplemen makanan?</div>
                     <div class="input-list">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="supelmen_wanita" id="radioList5" value="1" {{ $catin->merokok_pria == '1' ? 'checked' : '' }}>
+                            <input class="form-check-input" type="radio" name="supelmen_wanita" id="radioList5" value="1" {{ $catin->supelmen_wanita == '1' ? 'checked' : '' }}>
                             <label class="form-check-label" for="radioList5">Ya</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="supelmen_wanita" id="radioList5.1" value="2" {{ $catin->merokok_pria == '2' ? 'checked' : '' }}>
+                            <input class="form-check-input" type="radio" name="supelmen_wanita" id="radioList5.1" value="2" {{ $catin->supelmen_wanita == '2' ? 'checked' : '' }}>
                             <label class="form-check-label" for="radioList5.1">Tidak</label>
                         </div>
                     </div>
@@ -222,15 +131,19 @@
                     <div class="section-title">Memfasilitasi rujukan layanan</div>
                     <div class="input-list">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="rujukan_wanita" id="radioList6" value="1" {{ $catin->merokok_pria == '1' ? 'checked' : '' }}>
+                            <input class="form-check-input" type="radio" name="rujukan_wanita" id="radioList6" value="1" {{ $catin->rujukan_wanita == '1' ? 'checked' : '' }}>
                             <label class="form-check-label" for="radioList6">Ya</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="rujukan_wanita" id="radioList6.1" value="2" {{ $catin->merokok_pria == '2' ? 'checked' : '' }}>
+                            <input class="form-check-input" type="radio" name="rujukan_wanita" id="radioList6.1" value="2" {{ $catin->rujukan_wanita == '2' ? 'checked' : '' }}>
                             <label class="form-check-label" for="radioList6.1">Tidak</label>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="input-wrapper mb-2">
+                <label class="label" for="tgl_kunjungan">Tgl Kunjungan</label>
+                <input type="text" class="form-control" id="tgl_kunjungan" value="{{ \Carbon\Carbon::parse($catin->tgl_pendampingan)->isoFormat('D MMMM YYYY') }}" name="tgl_pendampingan">
             </div>
             <div class="input-wrapper mb-2">
                 <label for="catatan_pendampingan">Catatan</label>
@@ -240,10 +153,21 @@
                     <ion-icon name="close-circle"></ion-icon>
                 </i>
             </div>
+            <div class="form-group mb-2">
+                <label for="type">Type Data</label>
+                <select class="form-control" id="type" name="type_data">
+                  <option value="update">--pilih--</option>
+                  <option value="update">Update data</option>
+                  <option value="store">Simpan sebagai data baru</option>
+                </select>
+              </div>
         <div class="form-group">
-            @include('components.btn._loading_submit')
-            <button id="btn_submit" type="submit" class="btn btn-primary btn-block btn-lg"
-            >Simpan</button>
+            @include('components.btn._loading_update')
+            <button id="btn_update" type="submit" class="btn btn-primary btn-block" data-btn="store">SIMPAN</button>
+        </div>
+        <div class="form-group">
+            @include('components.btn._loading_update')
+            <button id="btn_update" type="button" onclick="hapusRiwayatPendampingan({{ $catin->id }})" class="btn btn-danger btn-block mt-1">HAPUS</button>
         </div>
     </div>
 </form>

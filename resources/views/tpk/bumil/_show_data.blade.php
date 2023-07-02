@@ -1,46 +1,14 @@
-<form id="bumilUpdate">
+<form id="updatePendampingan">
+    <input type="hidden" value="{{ $bumil->nama }}" name="nama">
+    <input type="hidden" value="{{ $bumil->nik }}" name="nik">
+    <input type="hidden" value="{{ $bumil->tgl_lahir }}" name="tgl_lahir">
+    <input type="hidden" value="{{ $bumil->telp }}" name="telp">
+    <input type="hidden" value="{{ $bumil->alamat }}" name="alamat">
     <div class="form-group boxed">
-        <div class="input-wrapper">
-            <h5 class="p-1 mb-2 bg-secondary text-white rounded">A. BIODATA IBU HAMIL</h5>
-            <label for="">NIK</label>
-            <input type="hidden" name="id" value="{{ $bumil->id }}">
-            <input type="number" class="form-control" name="nik" required value="{{ $bumil->nik }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
         <div class="input-wrapper mb-2">
-            <label for="">Nama</label>
-            <input type="text" class="form-control" name="nama" required value="{{ $bumil->nama }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper mb-2">
-            <label for="">Alamat</label>
-            <input type="text" class="form-control" name="alamat" required value="{{ $bumil->alamat }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper mb-2">
-            <label for="">Tgl Lahir Ibu</label>
-            <input type="date" class="form-control" name="tgl_lahir" required value="{{ $bumil->tgl_lahir }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper mb-2">
-            <label for="">No HP (WA)</label>
-            <input type="number" class="form-control" name="telp" required value="{{ $bumil->telp }}">
-            <i class="clear-input">
-                <ion-icon name="close-circle"></ion-icon>
-            </i>
-        </div>
-        <div class="input-wrapper mb-2">
-            <h5 class="p-1 mb-2 bg-secondary text-white rounded">B. HASIL PEMERIKSAAN KESEHATAN BUMIL</h5>
+            <h5 class="p-1 mb-2 bg-secondary text-white rounded">A. HASIL PEMERIKSAAN KESEHATAN BUMIL</h5>
             <label for="">Tgl Kunjungan</label>
-            <input type="date" class="form-control" name="tgl_kunjungan" required value="{{ $bumil->tgl_kunjungan }}">
+            <input type="text" id="tgl_kunjungan" class="form-control" name="tgl_kunjungan" required value="{{ \Carbon\Carbon::parse($bumil->tgl_kunjungan)->isoFormat('D MMMM YYYY') }}">
             <i class="clear-input">
                 <ion-icon name="close-circle"></ion-icon>
             </i>
@@ -49,16 +17,16 @@
             <label for="">Jumlah Anak</label>
             <select class="form-control custom-select" name="jumlah_anak">
                 <option value="">--Pilih--</option>
-                <option value="0">Belum Ada Anak</option>
-                <option value="1">Satu</option>
-                <option value="2">Dua</option>
-                <option value="3">Tiga</option>
-                <option value="4">Empat</option>
-                <option value="5">Lima</option>
-                <option value="6">Enam</option>
-                <option value="7">Tujuh</option>
-                <option value="8">Delapan</option>
-                <option value="9">Sembilan</option>
+                <option value="0" {{ $bumil->jumlah_anak == '0' ? 'selected' : '' }}>Belum Ada Anak</option>
+                <option value="1" {{ $bumil->jumlah_anak == '1' ? 'selected' : '' }}>Satu</option>
+                <option value="2" {{ $bumil->jumlah_anak == '2' ? 'selected' : '' }}>Dua</option>
+                <option value="3" {{ $bumil->jumlah_anak == '3' ? 'selected' : '' }}>Tiga</option>
+                <option value="4" {{ $bumil->jumlah_anak == '4' ? 'selected' : '' }}>Empat</option>
+                <option value="5" {{ $bumil->jumlah_anak == '5' ? 'selected' : '' }}>Lima</option>
+                <option value="6" {{ $bumil->jumlah_anak == '6' ? 'selected' : '' }}>Enam</option>
+                <option value="7" {{ $bumil->jumlah_anak == '7' ? 'selected' : '' }}>Tujuh</option>
+                <option value="8" {{ $bumil->jumlah_anak == '8' ? 'selected' : '' }}>Delapan</option>
+                <option value="9" {{ $bumil->jumlah_anak == '9' ? 'selected' : '' }}>Sembilan</option>
             </select>
         </div>
         <div class="input-wrapper mb-2">
@@ -100,13 +68,13 @@
             <label for="">Riwayat Penyakit</label>
             <select class="form-control custom-select" name="riwayat_penyakit">
                 <option value="">--Pilih--</option>
-                <option value="Hipertensi">Hipertensi</option>
-                <option value="Kencing Manis/Diabetes">Kencing Manis/Diabetes</option>
-                <option value="Thyroid">Thyroid</option>
-                <option value="Penyakit Jantung">Penyakit Jantung</option>
-                <option value="TBC">TBC</option>
-                <option value="Asma">Asma</option>
-                <option value="Lainya">Lainya</option>
+                <option value="Hipertensi" {{ $bumil->riwayat_penyakit == 'Hipertensi' ? 'selected' : '' }}>Hipertensi</option>
+                <option value="Kencing Manis/Diabetes" {{ $bumil->riwayat_penyakit == '0' ? 'selected' : '' }}>Kencing Manis/Diabetes</option>
+                <option value="Thyroid" {{ $bumil->riwayat_penyakit == 'Kencing Manis/Diabetes' ? 'selected' : '' }}>Thyroid</option>
+                <option value="Penyakit Jantung" {{ $bumil->riwayat_penyakit == 'Penyakit Jantung' ? 'selected' : '' }}>Penyakit Jantung</option>
+                <option value="TBC" {{ $bumil->riwayat_penyakit == 'TBC' ? 'selected' : '' }}>TBC</option>
+                <option value="Asma" {{ $bumil->riwayat_penyakit == 'Asma' ? 'selected' : '' }}>Asma</option>
+                <option value="Lainya" {{ $bumil->riwayat_penyakit == 'Lainya' ? 'selected' : '' }}>Lainya</option>
             </select>
         </div>
         <div class="input-wrapper mb-2">
@@ -146,7 +114,7 @@
 
             </div>
         </div>
-        <h5 class="p-1 mb-2 bg-secondary text-white rounded">C. PENDAMPINGAN KEPADA IBU HAMIL</h5>
+        <h5 class="p-1 mb-2 bg-secondary text-white rounded">B. PENDAMPINGAN KEPADA IBU HAMIL</h5>
         <div class="section full mt-2 mb-2">
             <div class="wide-block p-0">
                 <div class="section-title">Memberikan Penyuluhan/KIE</div>
@@ -209,7 +177,7 @@
     
             <div class="input-wrapper my-2">
                 <label for="">Tanggal Kunjungan Berikut</label>
-                <input type="date" class="form-control" name="tgl_kunjungan_berikutnya" required value="{{ $bumil->tgl_kunjungan_berikutnya }}">
+                <input id="tgl_kunjungan_berikutnya" type="text" class="form-control" name="tgl_kunjungan_berikutnya" required value="{{ \Carbon\Carbon::parse($bumil->tgl_kunjungan_berikutnya)->isoFormat('D MMMM YYYY')}}">
                 <i class="clear-input">
                     <ion-icon name="close-circle"></ion-icon>
                 </i>
@@ -222,11 +190,22 @@
                 <i class="clear-input">
                     <ion-icon name="close-circle"></ion-icon>
                 </i>
-        <div class="form-group mt-2">
-            @include('components.btn._loading_submit_bumil')
-            <button id="btn_submit_bumil" type="submit" class="btn btn-primary btn-block btn-lg">Simpan</button>
-        </div>
-    </div>
+            </div>
+            <div class="form-group mb-2">
+                <label for="type">Type Data</label>
+                <select class="form-control" id="type" name="type_data">
+                  <option value="update">--pilih--</option>
+                  <option value="update">Update data</option>
+                  <option value="store">Simpan sebagai data baru</option>
+                </select>
+              </div>
+            <div class="form-group mt-2">
+                @include('components.btn._loading_update')
+                <button id="btn_update" type="submit" class="btn btn-primary btn-block">SIMPAN</button>
+            </div>
+            <div class="form-group mt-1">
+                <button type="button" onclick="hapusRiwayatPendampingan({{ $bumil->id }})" class="btn btn-danger btn-block">HAPUS</button>
+            </div>
     </div>
 </div>
 </form>

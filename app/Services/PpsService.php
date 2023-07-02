@@ -22,8 +22,31 @@ class PpsService
 
     public function update($id, $data)
     {
-        $model = $this->model->find($id);
+        if (is_numeric($id)) {
+            $model = $this->model->where('id', $id)->where('pendamping_id', auth()->guard('tpk')->user()->id)->first();
+        } else {
+            $model = $this->model->where('kode_pasca_persalinan', $id)->where('pendamping_id',  auth()->guard('tpk')->user()->id);
+        }
         $model->update($data);
+        return $model;
+    }
+
+    public function destroy($id)
+    {
+        if (is_numeric($id)) {
+            $model = $this->model->where('id', $id)->where('pendamping_id', auth()->guard('tpk')->user()->id)->first();
+            $model->destroy($id);
+        } else {
+            $model = $this->model->where('kode_pasca_persalinan', $id)->where('pendamping_id', auth()->guard('tpk')->user()->id);
+            $model->delete($id);
+        }
+        return $model;
+    }
+
+    public function delete($kode_pps)
+    {
+        $model = $this->model->where('kode_pasca_persalinan', $kode_pps)->where('pendamping_id', auth()->guard('tpk')->user()->id);
+        $model->delete($kode_pps);
         return $model;
     }
 

@@ -11,6 +11,7 @@
 </div>
 @endsection
 @push('js')
+
 <script type="text/javascript">
     var page = 1;
     var paginate = 5;
@@ -40,7 +41,7 @@
     async function loadData()
         {
             var param = {
-                url: "/api/tpk/catin/histories/{{ request('kode_catin') }}",
+                url: "/api/tpk/bumil/histories/{{ request('kode_bumil') }}",
                 method: 'GET',
             }
 
@@ -49,7 +50,7 @@
                 loading(false);
                 $('#catinHistories').html(result);
                 showData();
-                updateDataCatin();
+                updateBumil();
             });
         }
 
@@ -68,20 +69,20 @@
 
         function showData()
         {
-            $('#showDataCatin').on('show.bs.modal', async function (e) {
+            $('#showDataBumil').on('show.bs.modal', async function (e) {
                 var id = $(e.relatedTarget).data('id');
                 
                 var param = {
-                url: '/api/tpk/catin/show/'+id,
+                url: '/api/tpk/bumil/show/'+id,
                 method: 'GET',
             }
 
             await transAjax(param).then((result) => {
-                $('#dataCatinById').html(result);
+                $('#dataBumilById').html(result);
                 getWilayah();
-                updatePendampingan();
+                updatePendampingan(id);
             });
-            });
+        });
 
         function getWilayah()
         {
@@ -102,18 +103,17 @@
             }
         }
 
-        function updateDataCatin()
+        function updateBumil()
         {
-            $('#catinUpdate').submit(async function update(e) {
+            $('#bumilUpdate').submit(async function update(e) {
             e.preventDefault();
 
-            var form 	= $(this)[0]; 
-            var data 	= new FormData(form);
-            var kode_catin = data.get('kode_catin');
+            var form 	 = $(this)[0]; 
+            var data 	 = new FormData(form);
 
             var param = {
                 method: 'POST',
-                url: '/api/tpk/catin/update/'+kode_catin,
+                url: "/api/tpk/bumil/update/{{ request('kode_bumil') }}",
                 data: data,
                 processData: false,
                 contentType: false,
@@ -123,42 +123,30 @@
                 loadingsubmit(true);
                 await transAjax(param).then((res) => {
                     loadingsubmit(false);
-                    $('#showDataCatin').modal('hide');
                     swal({text: res.message, icon: 'success', timer: 3000,});
                 }).catch((err) => {
                     loadingsubmit(false);
-                    $('#showDataCatin').modal('hide');
                     swal({text: err.message, icon: 'error', timer: 3000,})
                 });
 
             function loadingsubmit(state){
                 if(state) {
-                    $('#btn_loading').removeClass('d-none');
-                    $('#btn_submit').addClass('d-none');
+                    $('#btn_loading_bumil').removeClass('d-none');
+                    $('#btn_submit_bumil').addClass('d-none');
                 }else {
-                    $('#btn_loading').addClass('d-none');
-                    $('#btn_submit').removeClass('d-none');
+                    $('#btn_loading_bumil').addClass('d-none');
+                    $('#btn_submit_bumil').removeClass('d-none');
                 }
             }  
-            });
+        });
 
-            var _input = $('#tgl_catin_pria');
-            _input.on('click', function() {
-                _input.attr('type', 'date');
-            });
+        var _tgl_lahir = $('#tgl_lahir');
+        _tgl_lahir.on('click', function() {
+            _tgl_lahir.attr('type', 'date');    
+        });
+    }
 
-            var __input = $('#tgl_lahir_catin_wanita');
-            __input.on('click', function() {
-                __input.attr('type', 'date');
-            });
-
-            var ___input = $('#tgl_pernikahan');
-            ___input.on('click', function() {
-                ___input.attr('type', 'date');
-            });
-        }
-
-        function updatePendampingan()
+    function  updatePendampingan(id)
         {
             $('#updatePendampingan').submit(async function update(e) {
             e.preventDefault();
@@ -166,12 +154,11 @@
             var form 	= $(this)[0]; 
             var data 	= new FormData(form);
             var _typeData = data.get('type_data');
-            var id_pendampingan = data.get('id_pendampingan');
 
             if(_typeData == 'update') {
-                var _url = '/api/tpk/catin/update/'+id_pendampingan;
+                var _url = '/api/tpk/bumil/update/'+id;
             }else {
-                var _url = '/api/tpk/catin/store';
+                var _url = '/api/tpk/bumil/store';
             }
 
             var param = {
@@ -186,13 +173,13 @@
                 loadingsubmit(true);
                 await transAjax(param).then((res) => {
                     loadingsubmit(false);
-                    $('#showDataCatin').modal('hide');
+                    $('#showDataBumil').modal('hide');
                     swal({text: res.message, icon: 'success', timer: 3000,}).then(() => {
-                    window.location.href = '/tpk/catin/histories?kode_catin={{ request('kode_catin') }}';
+                    window.location.href = '/tpk/bumil/histories?kode_bumil={{ request('kode_bumil') }}';
                 });
                 }).catch((err) => {
                     loadingsubmit(false);
-                    $('#showDataCatin').modal('hide');
+                    $('#showDataBumil').modal('hide');
                     swal({text: err.message, icon: 'error', timer: 3000,})
                 });
 
@@ -207,9 +194,14 @@
             }  
             });
 
-            var _input = $('#tgl_kunjungan');
+            var _input = $('#tgl_kunjungan_berikutnya');
             _input.on('click', function() {
                 _input.attr('type', 'date');
+            });
+
+            var __input = $('#tgl_kunjungan');
+            __input.on('click', function() {
+                __input.attr('type', 'date');
             });
         }
 
@@ -217,7 +209,7 @@
         {
             var param = {
                 method: 'POST',
-                url: '/api/tpk/catin/histories/delete/'+id
+                url: '/api/tpk/bumil/histories/destroy/'+id
             }
 
             const willDelete = await swal({
@@ -230,7 +222,7 @@
             if (willDelete) {
                 await transAjax(param).then((res) => {
                     swal({text: res.message, icon: 'success', timer: 3000,}).then(() => {
-                    window.location.href = '/tpk/catin/histories?kode_catin={{ request('kode_catin') }}';
+                    window.location.href = '/tpk/bumil/histories?kode_bumil={{ request('kode_bumil') }}';
                 });
                 }).catch((err) => {
                     swal({text: 'Internal Server Error!', icon: 'warning', timer: 3000,});
@@ -238,11 +230,11 @@
             }
         }
 
-        async function hapusCatin(kode_catin)
+        async function hapusBumil(kode_catin)
         {
             var param = {
                 method: 'POST',
-                url: '/api/tpk/catin/destroy/'+kode_catin,
+                url: '/api/tpk/bumil/histories/delete/'+kode_catin,
             }
 
             const willDelete = await swal({
@@ -255,13 +247,13 @@
             if (willDelete) {
                 await transAjax(param).then((res) => {
                     swal({text: res.message, icon: 'success', timer: 3000,}).then(() => {
-                    window.location.href = '/tpk/catin';
+                    window.location.href = '/tpk/bumil';
                 });
                 }).catch((err) => {
                     swal({text: 'Internal Server Error!', icon: 'warning', timer: 3000,});
                 });
             }
         }
+
 </script>
 @endpush
-

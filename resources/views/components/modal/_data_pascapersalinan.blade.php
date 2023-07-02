@@ -45,7 +45,7 @@
                             </div>
                             <div class="input-wrapper mb-2">
                                 <label for="">No HP (WA)</label>
-                                <input type="number" class="form-control" name="no_tlp">
+                                <input type="number" class="form-control" name="telp">
                                 <i class="clear-input">
                                     <ion-icon name="close-circle"></ion-icon>
                                 </i>
@@ -101,8 +101,7 @@
                                     <option value="2">Tidak</option>
                                 </select>
                             </div>
-                            <div id="jenis_komplikasi" class="form-group basic d-none">
-                                <div class="input-wrapper mb-2">
+                                <div id="jenis_komplikasi" class="input-wrapper mb-2 d-none">
                                     <label for="">Pilih Jenis Komplikasi</label>
                                     <select class="form-control custom-select" name="jenis_komplikasi">
                                         <option value="">--Pilih--</option>
@@ -112,7 +111,6 @@
                                         <option value="Lainya">Lainya</option>
                                     </select>
                                 </div>
-                            </div>
                             <div class="input-wrapper mb-2">
                                 <label for="">Keadaan Bayi</label>
                                 <select class="form-control custom-select" name="keadaan_bayi">
@@ -130,8 +128,7 @@
                                     <option value="2">Tidak</option>
                                 </select>
                             </div>
-                        <div class="subkb form-group basic d-none">
-                            <div class="input-wrapper mb-2">
+                            <div class="subkb input-wrapper mb-2 d-none">
                                 <label for="">Jenis KBPP</label>
                                 <select class="form-control custom-select"  name="jenis_kb">
                                     <option value="">--Pilih--</option>
@@ -144,10 +141,7 @@
                                     <option value="Pil KB">Pil KB</option>
                                     <option value="Suntik KB">Suntik KB</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="subkb form-group basic d-none">
-                            <div class="input-wrapper mb-2">
+                            <div class="subkb input-wrapper mb-2 d-none">
                                 <label for="">Alasan Ber KB</label>
                                 <select class="form-control custom-select"  name="alasan_kb">
                                     <option value="">--Pilih--</option>
@@ -155,9 +149,7 @@
                                     <option value="Tidak Ingin Anak Lagi">Tidak Ingin Anak Lagi</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="subnokb form-group basic d-none">
-                            <div class="input-wrapper mb-2">
+                            <div class="subnokbinput-wrapper mb-2 d-none">
                                 <label for="">Alasan Tidak Ingin Ber KB</label>
                                 <select class="form-control custom-select" name="alasan_tidak_kb">
                                     <option value="">--Pilih--</option>
@@ -230,8 +222,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="sub-bansos form-group basic d-none">
-                                <div class="input-wrapper mb-2">
+                                <div class="sub-bansos input-wrapper mb-2 d-none">
                                     <select class="form-control custom-select"  name="jenis_bansos">
                                         <option value="">--Pilih Bantuan Sosial--</option>
                                         <option value="Program Keluarga Harapan">Program Keluarga Harapan</option>
@@ -241,7 +232,6 @@
                                         <option value="Lainya">Lainya</option>
                                     </select>
                                 </div>
-                            </div>
                                 <div class="input-wrapper mb-2">
                                     <label for="">Tgl Kunjungan Berikut</label>
                                     <input type="date" class="form-control" name="tgl_kunjungan_berikut">
@@ -341,7 +331,7 @@
             }).catch((err) => {
                 loadingsubmit(false);
                 $('#pascaPersalinan').modal('hide');
-                swal({text: err.message, icon: 'error', timer: 3000,});
+                swal({text: err.responseJSON.message.errorInfo[2], icon: 'error', timer: 3000,});
             });
 
         function loadingsubmit(state){

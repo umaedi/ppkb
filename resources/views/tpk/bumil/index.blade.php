@@ -109,48 +109,5 @@
             });
             });
         }
-
-        function updateBumil()
-        {
-            $('#bumilUpdate').submit(async function update(e) {
-            e.preventDefault();
-
-            var form 	 = $(this)[0]; 
-            var data 	 = new FormData(form);
-            var id_bumil = data.get('id');
-
-            var param = {
-                method: 'POST',
-                url: '/api/tpk/bumil/update/'+id_bumil,
-                data: data,
-                processData: false,
-                contentType: false,
-                cache: false,
-            }
-
-                loadingsubmit(true);
-                await transAjax(param).then((res) => {
-                    loadingsubmit(false);
-                    $('#showDataBumil').modal('hide');
-                    swal({text: res.message, icon: 'success', timer: 3000,}).then(() => {
-                        window.location.href = '/tpk/bumil';
-                    });
-                }).catch((err) => {
-                    loadingsubmit(false);
-                    $('#showDataBumil').modal('hide');
-                    swal({text: err.message, icon: 'error', timer: 3000,})
-                });
-
-            function loadingsubmit(state){
-                if(state) {
-                    $('#btn_loading').removeClass('d-none');
-                    $('#btn_submit').addClass('d-none');
-                }else {
-                    $('#btn_loading').addClass('d-none');
-                    $('#btn_submit').removeClass('d-none');
-                }
-            }  
-            });
-        }
 </script>
 @endpush

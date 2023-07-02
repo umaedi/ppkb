@@ -1,36 +1,17 @@
 @extends('layouts.tpk.app')
 @section('content')
 <div id="appCapsule">
-    <div class="section my-3">
-        <div class="card">
-            <div class="card-body">
-                    <div class="row">
-                        <div class="form-group boxed">
-                            <div class="input-wrapper">
-                                <input type="text" class="form-control"  id="search" placeholder="Cari berdasarkan nama..." name="q">
-                            </div>
-                        </div>
-                        <div class="form-group boxed">
-                            <select class="form-control custom-select"  id="perPage">
-                                <option value="">--Perhalaman--</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="50">50</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mt-3">
-            @include('components._loading')
-            <div class="table-responsive" id="data-table">
-                
-            </div>
-        </div>
+    <div class="section my-3" id="badutaHistories">
+        <button class="btn btn-primary btn-block btn-lg mb-2 d-none" id="loading" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Tunggu sebentar yah...
+        </button>
     </div>
+</div>
 </div>
 @endsection
 @push('js')
+
 <script type="text/javascript">
     var page = 1;
     var paginate = 5;
@@ -60,20 +41,14 @@
     async function loadData()
         {
             var param = {
-                url: '/api/tpk/pps',
+                url: "/api/tpk/baduta/histories/{{ request('kode_baduta') }}",
                 method: 'GET',
-                data: {
-                    load: 'table',
-                    page: page,
-                    paginate: paginate,
-                    search: search,
-                }
             }
 
             loading(true);
             await transAjax(param).then((result) => {
                 loading(false);
-                $('#data-table').html(result);
+                $('#badutaHistories').html(result);
                 showData();
             });
         }
@@ -93,33 +68,62 @@
 
         function showData()
         {
-            $('#showDataPps').on('show.bs.modal', async function (e) {
+            $('#showDataBaduta').on('show.bs.modal', async function (e) {
                 var id = $(e.relatedTarget).data('id');
                 
                 var param = {
-                url: '/api/tpk/pps/show/'+id,
+                url: '/api/tpk/baduta/show/'+id,
                 method: 'GET',
             }
 
+            // loading(true);
             await transAjax(param).then((result) => {
-                $('#dataPpsById').html(result);
-                    ppsUpdate();
+                // loading(false);
+                $('#dataBadutaById').html(result);
+                getWilayah();
+            });
+            });
+
+            // function loading(state) {
+            // if(state) {
+            //     $('#loading').removeClass('d-none');
+            // } else {
+            //     $('#loading').addClass('d-none');
+            // }
+        // }
+
+        function getWilayah()
+        {
+            $(document).ready(async function wilayah() {
+                var param = {
+                    method: 'GET',
+                    url: '/api/tpk/wilayah',
+                }
+
+                await transAjax(param).then((res) => {
+                    res.data.forEach(el => {
+                        $('#wilayah').append(`
+                            <option value="${el.id}">${el.nama}</option>      
+                        `);
+                    });
+                    updateBaduta();
                 });
             });
+            }
         }
 
-        function ppsUpdate()
+        function updateBaduta()
         {
-            $('#ppsUpdate').submit(async function store(e) {
+            $('#catinUpdate').submit(async function store(e) {
             e.preventDefault();
 
             var form 	= $(this)[0]; 
             var data 	= new FormData(form);
-            var id_pps = data.get('id');
+            var id_catin = data.get('id');
 
             var param = {
                 method: 'POST',
-                url: '/api/tpk/pps/update/'+id_pps,
+                url: '/api/tpk/baduta/update/'+id_catin,
                 data: data,
                 processData: false,
                 contentType: false,
@@ -129,13 +133,13 @@
                 loadingsubmit(true);
                 await transAjax(param).then((res) => {
                     loadingsubmit(false);
-                    $('#showDataPps').modal('hide');
+                    $('#showDataCatin').modal('hide');
                     swal({text: res.message, icon: 'success', timer: 3000,}).then(() => {
-                        window.location.href = '/tpk/pps';
+                        window.location.href = '/tpk/baduta';
                     });
                 }).catch((err) => {
                     loadingsubmit(false);
-                    $('#showDataPps').modal('hide');
+                    $('#showDataCatin').modal('hide');
                     swal({text: err.message, icon: 'error', timer: 3000,})
                 });
 

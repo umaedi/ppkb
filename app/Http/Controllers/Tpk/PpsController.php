@@ -11,4 +11,10 @@ class PpsController extends Controller
         $data['title'] = 'Data Pasca Persalinan';
         return view('tpk.pps.index', $data);
     }
+
+    public function histories()
+    {
+        $data['title'] = 'Data Pasca Persalinan';
+        return view('tpk.pps.histories', $data);
+    }
 }

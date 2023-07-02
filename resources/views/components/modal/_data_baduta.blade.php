@@ -33,7 +33,7 @@
                             </div>
                             <div class="input-wrapper mb-2">
                                 <label for="alamat">Alamat</label>
-                                <input type="text" name="alamat" class="form-control">
+                                <textarea type="text" name="alamat" class="form-control"></textarea>
                                 <i class="clear-input">
                                     <ion-icon name="close-circle"></ion-icon>
                                 </i>
@@ -194,7 +194,7 @@
                         </div>
                         <div class="form-group basic">
                             @include('components.btn._loading_submit_baduta')
-                            <button id="btn_submit_baduta" type="submit" class="btn btn-primary btn-block btn-lg">Simpan</button>
+                            <button id="btn_submit_baduta" type="submit" class="btn btn-primary btn-block">Simpan</button>
                         </div>
                     </form>
                 </div>

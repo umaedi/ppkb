@@ -5,7 +5,7 @@
                 <div class="wallet-card">
                     <div class="balance">
                         <div class="left">
-                            <span class="title">Anda login sebagai user TPK {{ auth()->guard('tpk')->user()->wilayah_id }}</span>
+                            <span class="title">Selamat datang kembali</span>
                             <h1 class="total">{{ Auth::guard('tpk')->user()->nama }}</h1>
                         </div>
                         {{-- <div class="right">
@@ -144,11 +144,17 @@
                     </div>
                 </div>
             </div>
+            <div class="section mt-4">
+                <div class="section-title mb-1">PERLU KUNJUNGAN
+                    <select onchange="loadData(this.value)" class="select select-change" style="border: none; background: none">
+                        <option value="catin">CATIN</option>
+                        <option value="bumil">BUMIL</option>
+                        <option value="pps">PPS</option>
+                        <option value="baduta">BADUTA</option>
+                    </select>
+                </div>
+            </div>
                 <div class="section my-3">
-                    <div class="section-heading">
-                        
-                        <div class="section-title">PERLU KUNJUNGAN</div>
-                    </div>
                     <div class="card">
                         @include('components._loading')
                         <div class="table-responsive" id="data-table">
@@ -177,10 +183,16 @@
             loadData();
         });
 
-        async function loadData()
+        async function loadData(value)
         {
+            if(value == undefined) {
+                var _url = 'catin';
+            }else {
+                var _url = value;
+            }
+
             var param = {
-                url: '/api/tpk/pps',
+                url: '/api/tpk/'+_url,
                 method: 'GET',
                 data: {
                     load: 'table',

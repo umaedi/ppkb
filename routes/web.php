@@ -46,16 +46,19 @@ Route::middleware(['auth' => 'tpk'])->group(function () {
 		//bumil
 		Route::controller(\App\Http\Controllers\Tpk\BumilController::class)->group(function () {
 			Route::get('/bumil', 'index')->name('tpk.bumil.index');
+			Route::get('/bumil/histories', 'histories')->name('tpk.bumil.histories');
 		});
 
 		//pps
 		Route::controller(\App\Http\Controllers\Tpk\PpsController::class)->group(function () {
 			Route::get('/pps', 'index')->name('tpk.pps.index');
+			Route::get('/pps/histories', 'histories')->name('tpk.pps.histories');
 		});
 
 		//baduta
 		Route::controller(\App\Http\Controllers\Tpk\BadutaController::class)->group(function () {
 			Route::get('/baduta', 'index')->name('tpk.baduta.index');
+			Route::get('/baduta/histories', 'histories')->name('tpk.baduta.histories');
 		});
 	});
 });

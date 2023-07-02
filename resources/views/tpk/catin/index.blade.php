@@ -102,21 +102,11 @@
                 method: 'GET',
             }
 
-            // loading(true);
             await transAjax(param).then((result) => {
-                // loading(false);
                 $('#dataCatinById').html(result);
                 getWilayah();
+                });
             });
-            });
-
-            // function loading(state) {
-            // if(state) {
-            //     $('#loading').removeClass('d-none');
-            // } else {
-            //     $('#loading').addClass('d-none');
-            // }
-        // }
 
         function getWilayah()
         {
@@ -132,53 +122,9 @@
                             <option value="${el.id}">${el.nama}</option>      
                         `);
                     });
-                    updateCatin();
                 });
             });
             }
-        }
-
-        function updateCatin()
-        {
-            $('#catinUpdate').submit(async function store(e) {
-            e.preventDefault();
-
-            var form 	= $(this)[0]; 
-            var data 	= new FormData(form);
-            var id_catin = data.get('id');
-
-            var param = {
-                method: 'POST',
-                url: '/api/tpk/catin/update/'+id_catin,
-                data: data,
-                processData: false,
-                contentType: false,
-                cache: false,
-            }
-
-                loadingsubmit(true);
-                await transAjax(param).then((res) => {
-                    loadingsubmit(false);
-                    $('#showDataCatin').modal('hide');
-                    swal({text: res.message, icon: 'success', timer: 3000,}).then(() => {
-                        window.location.href = '/tpk/catin';
-                    });
-                }).catch((err) => {
-                    loadingsubmit(false);
-                    $('#showDataCatin').modal('hide');
-                    swal({text: err.message, icon: 'error', timer: 3000,})
-                });
-
-            function loadingsubmit(state){
-                if(state) {
-                    $('#btn_loading').removeClass('d-none');
-                    $('#btn_submit').addClass('d-none');
-                }else {
-                    $('#btn_loading').addClass('d-none');
-                    $('#btn_submit').removeClass('d-none');
-                }
-            }  
-            });
         }
 </script>
 @endpush

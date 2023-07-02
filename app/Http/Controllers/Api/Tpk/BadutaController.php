@@ -26,7 +26,7 @@ class BadutaController extends Controller
             $baduta->where('nama', 'like', '%' . request('search') . '%');
         }
 
-        $data['table'] = $baduta->paginate($page);
+        $data['table'] = $baduta->where('wilayah_id', auth()->guard('tpk')->user()->wilayah_id)->where('kunjungan', 1)->latest()->paginate($page);
         return view('tpk.baduta._data_table', $data);
     }
 
@@ -46,7 +46,15 @@ class BadutaController extends Controller
         $data = $request->except('_token');
         $data['kode_baduta'] = $kode_baduta;
         $data['kunjungan']  = $kunjungan;
-        $data['pendamping_id'] = 1;
+        $data['pendamping_id'] = auth()->guard('tpk')->user()->id;
+
+        $usia =  date('Y') - substr($data['tgl_lahir'], 0, 4);
+        $data['usia'] = $usia;
+        if ($usia >= 25) {
+            $data['status_usia'] = 1;
+        } else {
+            $data['status_usia'] = 2;
+        }
 
         DB::beginTransaction();
 
@@ -114,5 +122,12 @@ class BadutaController extends Controller
 
         DB::commit();
         return $this->sendResponseUpdate($data);
+    }
+
+    public function histories($kode_baduta)
+    {
+        $data['baduta'] = $this->baduta->Query()->where('kode_baduta', $kode_baduta)->first();
+        $data['table']  = $this->baduta->Query()->where('pendamping_id', auth()->guard('tpk')->user()->id)->get();
+        return view('tpk.baduta._data_table_histories', $data);
     }
 }

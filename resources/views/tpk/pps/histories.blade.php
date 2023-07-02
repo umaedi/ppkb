@@ -1,7 +1,7 @@
 @extends('layouts.tpk.app')
 @section('content')
 <div id="appCapsule">
-    <div class="section my-3" id="catinHistories">
+    <div class="section my-3" id="ppsHistories">
         <button class="btn btn-primary btn-block btn-lg mb-2 d-none" id="loading" type="button" disabled>
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             Tunggu sebentar yah...
@@ -11,6 +11,7 @@
 </div>
 @endsection
 @push('js')
+
 <script type="text/javascript">
     var page = 1;
     var paginate = 5;
@@ -40,16 +41,16 @@
     async function loadData()
         {
             var param = {
-                url: "/api/tpk/catin/histories/{{ request('kode_catin') }}",
+                url: "/api/tpk/pps/histories/{{ request('kode_pps') }}",
                 method: 'GET',
             }
 
             loading(true);
             await transAjax(param).then((result) => {
                 loading(false);
-                $('#catinHistories').html(result);
+                $('#ppsHistories').html(result);
                 showData();
-                updateDataCatin();
+                updatePps();
             });
         }
 
@@ -68,18 +69,18 @@
 
         function showData()
         {
-            $('#showDataCatin').on('show.bs.modal', async function (e) {
+            $('#showDataPps').on('show.bs.modal', async function (e) {
                 var id = $(e.relatedTarget).data('id');
                 
                 var param = {
-                url: '/api/tpk/catin/show/'+id,
+                url: '/api/tpk/pps/show/'+id,
                 method: 'GET',
             }
 
             await transAjax(param).then((result) => {
-                $('#dataCatinById').html(result);
+                $('#dataPpsById').html(result);
                 getWilayah();
-                updatePendampingan();
+                updatePendampingan(id);
             });
             });
 
@@ -102,18 +103,17 @@
             }
         }
 
-        function updateDataCatin()
+        function updatePps()
         {
-            $('#catinUpdate').submit(async function update(e) {
+            $('#ppsUpdate').submit(async function store(e) {
             e.preventDefault();
 
             var form 	= $(this)[0]; 
             var data 	= new FormData(form);
-            var kode_catin = data.get('kode_catin');
 
             var param = {
                 method: 'POST',
-                url: '/api/tpk/catin/update/'+kode_catin,
+                url: '/api/tpk/pps/update/{{ request('kode_pps') }}',
                 data: data,
                 processData: false,
                 contentType: false,
@@ -123,42 +123,32 @@
                 loadingsubmit(true);
                 await transAjax(param).then((res) => {
                     loadingsubmit(false);
-                    $('#showDataCatin').modal('hide');
+                    $('#showDataPps').modal('hide');
                     swal({text: res.message, icon: 'success', timer: 3000,});
                 }).catch((err) => {
                     loadingsubmit(false);
-                    $('#showDataCatin').modal('hide');
+                    $('#showDataPps').modal('hide');
                     swal({text: err.message, icon: 'error', timer: 3000,})
                 });
 
             function loadingsubmit(state){
                 if(state) {
-                    $('#btn_loading').removeClass('d-none');
-                    $('#btn_submit').addClass('d-none');
+                    $('#btn_loading_pps').removeClass('d-none');
+                    $('#btn_update_pps').addClass('d-none');
                 }else {
-                    $('#btn_loading').addClass('d-none');
-                    $('#btn_submit').removeClass('d-none');
+                    $('#btn_loading_pps').addClass('d-none');
+                    $('#btn_update_pps').removeClass('d-none');
                 }
             }  
             });
 
-            var _input = $('#tgl_catin_pria');
+            var _input = $('#tgl_lahir');
             _input.on('click', function() {
                 _input.attr('type', 'date');
             });
-
-            var __input = $('#tgl_lahir_catin_wanita');
-            __input.on('click', function() {
-                __input.attr('type', 'date');
-            });
-
-            var ___input = $('#tgl_pernikahan');
-            ___input.on('click', function() {
-                ___input.attr('type', 'date');
-            });
         }
 
-        function updatePendampingan()
+        function updatePendampingan(id)
         {
             $('#updatePendampingan').submit(async function update(e) {
             e.preventDefault();
@@ -166,12 +156,11 @@
             var form 	= $(this)[0]; 
             var data 	= new FormData(form);
             var _typeData = data.get('type_data');
-            var id_pendampingan = data.get('id_pendampingan');
 
             if(_typeData == 'update') {
-                var _url = '/api/tpk/catin/update/'+id_pendampingan;
+                var _url = '/api/tpk/pps/update/'+id;
             }else {
-                var _url = '/api/tpk/catin/store';
+                var _url = '/api/tpk/pps/store';
             }
 
             var param = {
@@ -186,13 +175,13 @@
                 loadingsubmit(true);
                 await transAjax(param).then((res) => {
                     loadingsubmit(false);
-                    $('#showDataCatin').modal('hide');
+                    $('#showDataPps').modal('hide');
                     swal({text: res.message, icon: 'success', timer: 3000,}).then(() => {
-                    window.location.href = '/tpk/catin/histories?kode_catin={{ request('kode_catin') }}';
+                    window.location.href = '/tpk/pps/histories?kode_pps={{ request('kode_pps') }}';
                 });
                 }).catch((err) => {
                     loadingsubmit(false);
-                    $('#showDataCatin').modal('hide');
+                    $('#showDataPps').modal('hide');
                     swal({text: err.message, icon: 'error', timer: 3000,})
                 });
 
@@ -207,9 +196,19 @@
             }  
             });
 
-            var _input = $('#tgl_kunjungan');
+            var _input = $('#tgl_kunjungan_berikut');
             _input.on('click', function() {
                 _input.attr('type', 'date');
+            });
+
+            var __input = $('#tgl_kunjungan');
+            __input.on('click', function() {
+                __input.attr('type', 'date');
+            });
+
+            var tgl_melahirkan = $('#tgl_melahirkan');
+            tgl_melahirkan.on('click', function() {
+                tgl_melahirkan.attr('type', 'date');
             });
         }
 
@@ -217,7 +216,7 @@
         {
             var param = {
                 method: 'POST',
-                url: '/api/tpk/catin/histories/delete/'+id
+                url: '/api/tpk/pps/histories/destroy/'+id
             }
 
             const willDelete = await swal({
@@ -230,7 +229,7 @@
             if (willDelete) {
                 await transAjax(param).then((res) => {
                     swal({text: res.message, icon: 'success', timer: 3000,}).then(() => {
-                    window.location.href = '/tpk/catin/histories?kode_catin={{ request('kode_catin') }}';
+                    window.location.href = '/tpk/pps/histories?kode_pps={{ request('kode_pps') }}';
                 });
                 }).catch((err) => {
                     swal({text: 'Internal Server Error!', icon: 'warning', timer: 3000,});
@@ -238,11 +237,11 @@
             }
         }
 
-        async function hapusCatin(kode_catin)
+        async function hapusPps(kode_pps)
         {
             var param = {
                 method: 'POST',
-                url: '/api/tpk/catin/destroy/'+kode_catin,
+                url: '/api/tpk/pps/histories/destroy/'+kode_pps,
             }
 
             const willDelete = await swal({
@@ -255,7 +254,7 @@
             if (willDelete) {
                 await transAjax(param).then((res) => {
                     swal({text: res.message, icon: 'success', timer: 3000,}).then(() => {
-                    window.location.href = '/tpk/catin';
+                    window.location.href = '/tpk/pps';
                 });
                 }).catch((err) => {
                     swal({text: 'Internal Server Error!', icon: 'warning', timer: 3000,});
@@ -264,4 +263,3 @@
         }
 </script>
 @endpush
-
