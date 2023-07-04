@@ -19,7 +19,7 @@
                             <h5 class="p-1 mb-2 bg-secondary text-white rounded">BIODATA IBU</h5>
                             <div class="input-wrapper mb-2">
                                 <label for="nik">NIK</label>
-                                <input type="number" name="nik" class="form-control">
+                                <input type="number" name="nik" class="form-control" maxlength="16">
                                 <i class="clear-input">
                                     <ion-icon name="close-circle"></ion-icon>
                                 </i>
@@ -134,8 +134,8 @@
                                 </i>
                             </div>
                             <div class="input-wrapper mb-2">
-                                <label for="pb_lahir">Panjang Badan Lahir (cm)</label>
-                                <input type="number" name="pb_lahir" class="form-control">
+                                <label for="pb_saat_ini">Panjang Badan Lahir (cm)</label>
+                                <input type="number" name="pb_saat_ini" class="form-control">
                                 <i class="clear-input">
                                     <ion-icon name="close-circle"></ion-icon>
                                 </i>
@@ -230,7 +230,7 @@
             }).catch((err) => {
                 loadingsubmit(false);
                 $('#baduta').modal('hide');
-                swal({text: err.message, icon: 'error', timer: 3000,});
+                swal({text: err.responseJSON.message.errorInfo[2], icon: 'error', timer: 3000,});
             });
 
         function loadingsubmit(state){

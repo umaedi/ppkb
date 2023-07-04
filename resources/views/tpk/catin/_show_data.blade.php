@@ -166,7 +166,6 @@
             <button id="btn_update" type="submit" class="btn btn-primary btn-block" data-btn="store">SIMPAN</button>
         </div>
         <div class="form-group">
-            @include('components.btn._loading_update')
             <button id="btn_update" type="button" onclick="hapusRiwayatPendampingan({{ $catin->id }})" class="btn btn-danger btn-block mt-1">HAPUS</button>
         </div>
     </div>

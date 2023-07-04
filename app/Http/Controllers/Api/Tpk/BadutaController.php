@@ -38,15 +38,22 @@ class BadutaController extends Controller
             $kunjungan = 1;
             $kode_baduta = strtoupper(Str::random(16));
         } else {
-            $data_kunjungan = $data_baduta->latest()->first();
-            $kunjungan = $data_kunjungan->kunjungan + 1;
+            $kunjungan = $data_baduta->kunjungan + 1;
             $kode_baduta = $data_baduta->kode_baduta;
         }
 
-        $data = $request->except('_token');
+        $data = $request->except('_token', 'type_data');
         $data['kode_baduta'] = $kode_baduta;
         $data['kunjungan']  = $kunjungan;
         $data['pendamping_id'] = auth()->guard('tpk')->user()->id;
+        $data['wilayah_id'] = auth()->guard('tpk')->user()->wilayah_id;
+        $data['tgl_kunjungan'] = date('Y-m-d');
+
+        //hitung usia baduta
+        $tgl_lahir_bayi = date_create($data['tgl_lahir_bayi']);
+        $dateNow = date_create();
+        $diff = date_diff($tgl_lahir_bayi, $dateNow);
+        $data['usia_bayi'] = $diff->days;
 
         $usia =  date('Y') - substr($data['tgl_lahir'], 0, 4);
         $data['usia'] = $usia;
@@ -54,6 +61,31 @@ class BadutaController extends Controller
             $data['status_usia'] = 1;
         } else {
             $data['status_usia'] = 2;
+        }
+
+        //status urutan anak
+        $tgl_lahir_anak_sebelum = date_create($data['tgl_lahir_anak_sebelum']);
+        $dif = date_diff($tgl_lahir_anak_sebelum, $dateNow);
+        $data['status_urutan_anak'] = $dif->y;
+
+        $data['tgl_pengukuran_saat_ini'] = now();
+        $data['pb_lahir'] = $data['pb_saat_ini'];
+
+        if ($data['bb_kehamilan'] > 1) {
+            $data['status_bb_saat_ini'] = 1;
+        } else {
+            $data['status_bb_saat_ini'] = 2;
+        }
+
+        if ($data['pb_saat_ini'] >= 10) {
+            $data['status_pb'] = 1;
+        } else {
+            $data['status_pb'] = 2;
+        }
+        if ($data['pb_saat_ini'] >= 10) {
+            $data['status_bb_pb'] = 1;
+        } else {
+            $data['status_bb_pb'] = 2;
         }
 
         DB::beginTransaction();
@@ -77,49 +109,23 @@ class BadutaController extends Controller
 
     public function update(Request $request, $id)
     {
-        $baduta = $this->baduta->find($id);
-        $data = $request->except('_token');
+        $data = $request->except('_token', 'type_data');
 
-        if ($data['penggunaan_kontrasepsi'] == null) {
-            $data['penggunaan_kontrasepsi'] = $baduta->penggunaan_kontrasepsi;
+        if (is_numeric($id)) {
+            $data['tgl_kunjungan_berikutnya'] = \Carbon\Carbon::parse($request->tgl_kunjungan_berikutnya)->format('Y-m-d');
         }
 
-        if ($data['air_minum_layak'] == null) {
-            $data['air_minum_layak'] = $baduta->air_minum_layak;
-        }
-
-        if ($data['tempat_bab_layak'] == null) {
-            $data['tempat_bab_layak'] = $baduta->tempat_bab_layak;
-        }
-
-        if ($data['jenis_kelamin'] == null) {
-            $data['jenis_kelamin'] = $baduta->jenis_kelamin;
-        }
-
-        if ($data['kehadiran_posyandu'] == null) {
-            $data['kehadiran_posyandu'] = $baduta->kehadiran_posyandu;
-        }
-
-        if ($data['penyuluhan_kie'] == null) {
-            $data['penyuluhan_kie'] = $baduta->penyuluhan_kie;
-        }
-
-        if ($data['pemberian_fasilitas_rujukan'] == null) {
-            $data['pemberian_fasilitas_rujukan'] = $baduta->pemberian_fasilitas_rujukan;
-        }
-
-        if ($data['bansos'] == null) {
-            $data['bansos'] = $baduta->bansos;
-        }
+        $data['tgl_lahir'] = \Carbon\Carbon::parse($request->tgl_lahir)->format('Y-m-d');
+        $data['tgl_lahir_bayi'] = \Carbon\Carbon::parse($request->tgl_lahir_bayi)->format('Y-m-d');
+        $data['tgl_lahir_anak_sebelum'] = \Carbon\Carbon::parse($request->tgl_lahir_anak_sebelum)->format('Y-m-d');
 
         DB::beginTransaction();
         try {
             $this->baduta->update($id, $data);
         } catch (\Throwable $th) {
             DB::rollBack();
-            return $this->sendResponseError(json_encode($th));
+            return $this->sendResponseError($th);
         }
-
         DB::commit();
         return $this->sendResponseUpdate($data);
     }
@@ -127,7 +133,18 @@ class BadutaController extends Controller
     public function histories($kode_baduta)
     {
         $data['baduta'] = $this->baduta->Query()->where('kode_baduta', $kode_baduta)->first();
-        $data['table']  = $this->baduta->Query()->where('pendamping_id', auth()->guard('tpk')->user()->id)->get();
+        $data['table']  = $this->baduta->Query()->where('kode_baduta', $kode_baduta)->get();
         return view('tpk.baduta._data_table_histories', $data);
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $this->baduta->destroy($id);
+        } catch (\Throwable $th) {
+            return $this->sendResponseError($th);
+        }
+
+        return $this->sendResponseDelete($id);
     }
 }

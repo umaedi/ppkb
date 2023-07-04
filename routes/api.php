@@ -64,6 +64,7 @@ Route::group(['middleware' => 'auth:sanctum',], function () {
 			Route::get('/baduta/show/{id}', [\App\Http\Controllers\Api\Tpk\BadutaController::class, 'show']);
 			Route::post('/baduta/update/{id}', [\App\Http\Controllers\Api\Tpk\BadutaController::class, 'update']);
 			Route::get('/baduta/histories/{kode_baduta}', [\App\Http\Controllers\Api\Tpk\BadutaController::class, 'histories']);
+			Route::post('/baduta/histories/destroy/{id}', [\App\Http\Controllers\Api\Tpk\BadutaController::class, 'destroy']);
 
 			//data wilayah
 			Route::get('/wilayah', [\App\Http\Controllers\Api\Tpk\WilayahController::class, 'index']);

@@ -43,13 +43,6 @@ class PpsService
         return $model;
     }
 
-    public function delete($kode_pps)
-    {
-        $model = $this->model->where('kode_pasca_persalinan', $kode_pps)->where('pendamping_id', auth()->guard('tpk')->user()->id);
-        $model->delete($kode_pps);
-        return $model;
-    }
-
     public function Query()
     {
         return $this->model->query();

@@ -50,6 +50,7 @@
                 loading(false);
                 $('#badutaHistories').html(result);
                 showData();
+                updateBaduta();
             });
         }
 
@@ -76,21 +77,12 @@
                 method: 'GET',
             }
 
-            // loading(true);
             await transAjax(param).then((result) => {
-                // loading(false);
                 $('#dataBadutaById').html(result);
                 getWilayah();
+                updatePendampingan(id);
             });
             });
-
-            // function loading(state) {
-            // if(state) {
-            //     $('#loading').removeClass('d-none');
-            // } else {
-            //     $('#loading').addClass('d-none');
-            // }
-        // }
 
         function getWilayah()
         {
@@ -106,7 +98,6 @@
                             <option value="${el.id}">${el.nama}</option>      
                         `);
                     });
-                    updateBaduta();
                 });
             });
             }
@@ -114,16 +105,15 @@
 
         function updateBaduta()
         {
-            $('#catinUpdate').submit(async function store(e) {
+            $('#badutaUpdate').submit(async function store(e) {
             e.preventDefault();
 
             var form 	= $(this)[0]; 
             var data 	= new FormData(form);
-            var id_catin = data.get('id');
 
             var param = {
                 method: 'POST',
-                url: '/api/tpk/baduta/update/'+id_catin,
+                url: '/api/tpk/baduta/update/{{ request('kode_baduta') }}',
                 data: data,
                 processData: false,
                 contentType: false,
@@ -133,26 +123,143 @@
                 loadingsubmit(true);
                 await transAjax(param).then((res) => {
                     loadingsubmit(false);
-                    $('#showDataCatin').modal('hide');
-                    swal({text: res.message, icon: 'success', timer: 3000,}).then(() => {
-                        window.location.href = '/tpk/baduta';
-                    });
+                    $('#showDataBaduta').modal('hide');
+                    swal({text: res.message, icon: 'success', timer: 3000,});
                 }).catch((err) => {
                     loadingsubmit(false);
-                    $('#showDataCatin').modal('hide');
+                    $('#showDataBaduta').modal('hide');
                     swal({text: err.message, icon: 'error', timer: 3000,})
                 });
 
             function loadingsubmit(state){
                 if(state) {
-                    $('#btn_loading').removeClass('d-none');
-                    $('#btn_submit').addClass('d-none');
+                    $('#btn_loading_baduta').removeClass('d-none');
+                    $('#btn_submit_baduta').addClass('d-none');
                 }else {
-                    $('#btn_loading').addClass('d-none');
-                    $('#btn_submit').removeClass('d-none');
+                    $('#btn_loading_baduta').addClass('d-none');
+                    $('#btn_submit_baduta').removeClass('d-none');
                 }
             }  
             });
+
+            var _input = $('#tgl_lahir');
+            _input.on('click', function() {
+                _input.attr('type', 'date');
+            });
+
+            var __input = $('#tgl_lahir_bayi');
+            __input.on('click', function() {
+                __input.attr('type', 'date');
+            });
+
+            var ___input = $('#tgl_lahir_anak_sebelum');
+            ___input.on('click', function() {
+                ___input.attr('type', 'date');
+            });
+        }
+
+        function updatePendampingan(id)
+        {
+            $('#updatePendampingan').submit(async function update(e) {
+            e.preventDefault();
+            
+            var form 	= $(this)[0]; 
+            var data 	= new FormData(form);
+            var _typeData = data.get('type_data');
+
+            if(_typeData == 'update') {
+                var _url = '/api/tpk/baduta/update/'+id;
+            }else {
+                var _url = '/api/tpk/baduta/store';
+            }
+
+            var param = {
+                method: 'POST',
+                url: _url,
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+            }
+
+                loadingsubmit(true);
+                await transAjax(param).then((res) => {
+                    loadingsubmit(false);
+                    $('#showDataBaduta').modal('hide');
+                    swal({text: res.message, icon: 'success', timer: 3000,}).then(() => {
+                    window.location.href = '/tpk/baduta/histories?kode_baduta={{ request('kode_baduta') }}';
+                });
+                }).catch((err) => {
+                    loadingsubmit(false);
+                    $('#showDataBaduta').modal('hide');
+                    swal({text: err.message, icon: 'error', timer: 3000,})
+                });
+
+            function loadingsubmit(state){
+                if(state) {
+                    $('#btn_loading_update').removeClass('d-none');
+                    $('#btn_update').addClass('d-none');
+                }else {
+                    $('#btn_loading_udate').addClass('d-none');
+                    $('#btn_update').removeClass('d-none');
+                }
+            }  
+            });
+
+            var _input = $('#tgl_kunjungan_berikutnya');
+            _input.on('click', function() {
+                _input.attr('type', 'date');
+            });
+        }
+
+        async function hapusRiwayatPendampingan(id)
+        {
+            var param = {
+                method: 'POST',
+                url: '/api/tpk/baduta/histories/destroy/'+id
+            }
+
+            const willDelete = await swal({
+            title: "Hapus data ini?",
+            text: "Yakin ingin menghapus data ini?",
+            icon: "warning",
+            dangerMode: true,
+            });
+
+            if (willDelete) {
+                await transAjax(param).then((res) => {
+                    swal({text: res.message, icon: 'success', timer: 3000,}).then(() => {
+                    window.location.href = '/tpk/baduta/histories?kode_baduta={{ request('kode_baduta') }}';
+                });
+                }).catch((err) => {
+                    swal({text: 'Internal Server Error!', icon: 'warning', timer: 3000,});
+                });
+            }
+        }
+
+        async function hapusBaduta(kode_baduta)
+        {
+            var param = {
+                method: 'POST',
+                url: '/api/tpk/baduta/histories/destroy/'+kode_baduta,
+            }
+
+            const willDelete = await swal({
+            title: "Hapus data ini?",
+            text: "Yakin ingin menghapus data ini?",
+            icon: "warning",
+            dangerMode: true,
+            });
+
+            if (willDelete) {
+                await transAjax(param).then((res) => {
+                    swal({text: res.message, icon: 'success', timer: 3000,}).then(() => {
+                    window.location.href = '/tpk/baduta';
+                });
+                }).catch((err) => {
+                    swal({text: 'Internal Server Error!', icon: 'warning', timer: 3000,});
+                });
+            }
         }
 </script>
 @endpush
