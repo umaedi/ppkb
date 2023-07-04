@@ -33,13 +33,6 @@
                         </i>
                     </div>
                     <div class="input-wrapper mb-2">
-                        <label for="">Wilayah</label>
-                        <input type="text" class="form-control" name="wilayah_id">
-                        <i class="clear-input">
-                            <ion-icon name="close-circle"></ion-icon>
-                        </i>
-                    </div>
-                    <div class="input-wrapper mb-2">
                         <label for="">ALamat</label>
                         <input type="text" class="form-control" name="alamat" value="{{ auth()->guard('tpk')->user()->alamat }}">
                         <i class="clear-input">
@@ -69,11 +62,11 @@
                     </div>
                     <div class="input-wrapper mb-2">
                         @include('components._loading')
-                        <button type="submit" class="btn btn-primary btn-block">Simpan</button>
+                        <button id="btn_submit" type="submit" class="btn btn-primary btn-block">SIMPAN</button>
                     </div>
                     <div class="input-wrapper">
                         @include('components._loading_logout')
-                        <a href="javascript:void(0)" id="btn_logout" onclick="logOut()" class="btn btn-danger btn-block">Keluar</a>
+                        <a href="javascript:void(0)" id="btn_logout" onclick="logOut()" class="btn btn-danger btn-block">KELUAR</a>
                     </div>
                 </div>
             </div>
@@ -113,10 +106,10 @@
 
             function loading(state) {
                 if(state) {
-                    $('#btn_logout').addClass('d-none');
+                    $('#btn_submit').addClass('d-none');
                     $('#loading').removeClass('d-none');
                 } else {
-                    $('#btn_logout').removeClass('d-none');
+                    $('#btn_submit').removeClass('d-none');
                     $('#loading').addClass('d-none');
                 }
             }
@@ -143,10 +136,10 @@
             function loading(state) {
                 if(state) {
                     $('#btn_logout').addClass('d-none');
-                    $('#loading').removeClass('d-none');
+                    $('#loading_logout').removeClass('d-none');
                 } else {
                     $('#btn_logout').removeClass('d-none');
-                    $('#loading').addClass('d-none');
+                    $('#loading_logout').addClass('d-none');
                 }
             }
         }

@@ -40,10 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-		
-		'tpk' => [
+
+        'tpk' => [
             'driver' => 'session',
-            'provider' => 'tpk',
+            'provider' => 'tpks',
         ],
 
         /*'api' => [
@@ -75,7 +75,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-		'tpk' => [
+        'tpks' => [
             'driver' => 'eloquent',
             'model' => App\Models\Tbl_user_tpk::class,
             'table' => 'tbl_user_tpk'

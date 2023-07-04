@@ -28,11 +28,14 @@ class ProfileControlleer extends Controller
             $data['password'] = Hash::make($data['password']);
         }
 
+        $data['wilayah_id'] = $tpk->wilayah_id;
+
         DB::beginTransaction();
         try {
             $this->tpk->update($tpk->id, $data);
         } catch (\Throwable $th) {
             DB::rollBack();
+            dd($th);
             return response()->json(['message', 'Internal Server Error!']);
         }
 
