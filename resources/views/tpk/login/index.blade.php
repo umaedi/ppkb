@@ -91,13 +91,16 @@
                 cache: false,
             };
 
-            var now = new Date();
-            var time = now.getTime() + 86400;
-
             loading(true);
             await transAjax(param).then((res) => {
                 loading(false);
-                document.cookie = `access_tokenku=${res.access_token}`, + time;
+
+                var expirationDate = new Date();
+                expirationDate.setDate(expirationDate.getDate() + 7);
+
+                var cookieString = 'access_tokenku' + "=" + encodeURIComponent(res.access_token) + "; expires=" + expirationDate.toUTCString() + "; path=/";
+                document.cookie = cookieString;
+
                 swal({text: 'Anda berhasil login', icon: 'success', timer: 3000,}).then(() => {
                     window.location.href = '/tpk/dashboard';
                 });

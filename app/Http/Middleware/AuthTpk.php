@@ -5,7 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class isTpk
+
+class AuthTpk
 {
     /**
      * Handle an incoming request.
@@ -16,6 +17,7 @@ class isTpk
      */
     public function handle(Request $request, Closure $next)
     {
+
         if (isset($_COOKIE['access_tokenku']) && auth()->guard('tpk')->user()) {
             return $next($request, $_COOKIE['access_tokenku']);
         } else {

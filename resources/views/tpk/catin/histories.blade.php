@@ -79,7 +79,7 @@
             await transAjax(param).then((result) => {
                 $('#dataCatinById').html(result);
                 getWilayah();
-                updatePendampingan();
+                updatePendampingan(id);
             });
             });
 
@@ -158,7 +158,7 @@
             });
         }
 
-        function updatePendampingan()
+        function updatePendampingan(id)
         {
             $('#updatePendampingan').submit(async function update(e) {
             e.preventDefault();
@@ -166,10 +166,9 @@
             var form 	= $(this)[0]; 
             var data 	= new FormData(form);
             var _typeData = data.get('type_data');
-            var id_pendampingan = data.get('id_pendampingan');
 
             if(_typeData == 'update') {
-                var _url = '/api/tpk/catin/update/'+id_pendampingan;
+                var _url = '/api/tpk/catin/update/'+id;
             }else {
                 var _url = '/api/tpk/catin/store';
             }

@@ -3,7 +3,7 @@
         <tr>
             <th scope="col">No</th>
             <th scope="col">Nama</th>
-            <th scope="col">Kunjungan</th>
+            <th scope="col">Tanggal</th>
             <th scope="col" class="text-end">Aksi</th>
         </tr>
     </thead>

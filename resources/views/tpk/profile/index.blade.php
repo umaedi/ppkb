@@ -5,7 +5,7 @@
     <div class="section mt-3 text-center">
         <div class="avatar-section">
             <a href="#">
-                <img src="{{ asset('assets/tpk/img/sample/avatar/avatar1.jpg') }}" alt="avatar" class="imaged w100 rounded">
+                <img src="{{ asset('assets/tpk/img/avatar.png') }}" alt="avatar" class="imaged w100 rounded">
             </a>
         </div>
     </div>
@@ -125,6 +125,7 @@
             loading(true);
             await transAjax(param).then((res) => {
                 loading(false);
+                document.cookie = 'access_tokenku' + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 swal({text: 'Anda berhasil logout!', icon: 'success', timer: 3000,}).then(() => {
                     window.location.href = '/login';
                 });

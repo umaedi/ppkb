@@ -100,7 +100,7 @@ class CatinController extends Controller
     public function update(Request $request, $id_pendampingan)
     {
 
-        $data = $request->except('_token', 'id_pendampingan', 'type_data');
+        $data = $request->except('_token', 'type_data');
 
         $data['tgl_lahir_catin_pria'] = \Carbon\Carbon::parse($request->tgl_lahir_catin_pria)->format('Y-m-d');
         $data['tgl_lahir_catin_wanita'] = \Carbon\Carbon::parse($request->tgl_lahir_catin_wanita)->format('Y-m-d');

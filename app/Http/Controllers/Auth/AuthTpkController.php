@@ -46,6 +46,7 @@ class AuthTpkController extends Controller
                 return response()->json(['message' => 'Login Faileds!'], 401);
             }
             $user = User::where('email', $request->email)->first();
+            auth()->guard('tpk')->login($user);
         }
 
         saveLogs('berhasil login', 'aktivitas');

@@ -145,7 +145,7 @@
                 </div>
             </div>
             <div class="section mt-4">
-                <div class="section-title mb-1">PERLU KUNJUNGAN
+                <div class="section-title mb-1">DATA TERBARU
                     <select onchange="loadData(this.value)" class="select select-change" style="border: none; background: none">
                         <option value="catin">CATIN</option>
                         <option value="bumil">BUMIL</option>

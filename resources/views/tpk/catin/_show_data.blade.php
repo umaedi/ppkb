@@ -1,5 +1,4 @@
 <form id="updatePendampingan">
-    <input type="hidden" name="id_pendampingan" value="{{ $catin->id }}">
     <input type="hidden" name="nik_catin_pria" value="{{ $catin->nik_catin_pria }}">
     <input type="hidden" value="{{ $catin->nama_catin_pria }}" name="nama_catin_pria">
     <input type="hidden" value="{{ $catin->nik_catin_pria }}" name="nik_catin_pria">
