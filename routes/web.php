@@ -29,7 +29,7 @@ Route::get('/login', function () {
 
 
 //HALAMAN PETUGAS TPK
-Route::middleware(['auth' => 'tpk'])->group(function () {
+Route::middleware(['auth:tpk'])->group(function () {
 	Route::prefix('tpk')->group(function () {
 		Route::get('/dashboard', [\App\Http\Controllers\Tpk\DashboardController::class, 'index'])->name('tpk.index');
 
