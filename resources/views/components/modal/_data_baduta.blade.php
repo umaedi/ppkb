@@ -38,12 +38,12 @@
                                     <ion-icon name="close-circle"></ion-icon>
                                 </i>
                             </div>
-                            <div class="input-wrapper mb-2">
+                            {{-- <div class="input-wrapper mb-2">
                                 <label for="wBaduta">Kecamatan</label>
                                 <select id="wBaduta" class="w-catin form-control custom-select" name="wilayah_id" required onclick="getWilayah('wBaduta')">
                                     <option value="0">--Pilih--</option>
                                 </select>
-                            </div>
+                            </div> --}}
                             <div class="input-wrapper mb-2">
                                 <label for="tgl_lahir_ibu">Tgl Lahir Ibu</label>
                                 <input type="date" name="tgl_lahir" class="form-control">

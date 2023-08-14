@@ -14,7 +14,11 @@ Route::controller(\App\Http\Controllers\Admin\AuthController::class)->group(func
 
 // LOGIN USER TPK
 Route::get('/login', function () {
-	return view('tpk.login.index');
+	if (auth()->guard('tpk')->check()) {
+		return redirect('/tpk/dashboard');
+	} else {
+		return view('tpk.login.index');
+	}
 });
 
 // Route::get('/login', [\App\Http\Controllers\Tpk\LoginController::class, 'index']);

@@ -8,11 +8,11 @@
                             <span class="title">Selamat datang kembali</span>
                             <h1 class="total">{{ Auth::guard('tpk')->user()->nama }}</h1>
                         </div>
-                        {{-- <div class="right">
+                        <div class="right">
                             <a href="#" class="button" data-bs-toggle="modal" data-bs-target="#depositActionSheet">
-                                <ion-icon name="add-outline"></ion-icon>
+                                <ion-icon name="cloud-download-outline"></ion-icon>
                             </a>
-                        </div> --}}
+                        </div>
                     </div>
                     <div class="wallet-footer">
                         <div class="item">
@@ -56,35 +56,23 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Add Balance</h5>
+                            <h5 class="modal-title">UNDUH DATA</h5>
                         </div>
                         <div class="modal-body">
                             <div class="action-sheet-content">
                                 <form>
                                     <div class="form-group basic">
                                         <div class="input-wrapper">
-                                            <label class="label" for="account1">From</label>
                                             <select class="form-control custom-select" id="account1">
-                                                <option value="0">Savings (*** 5019)</option>
-                                                <option value="1">Investment (*** 6212)</option>
-                                                <option value="2">Mortgage (*** 5021)</option>
+                                                <option value="catin">CATIN</option>
+                                                <option value="bumil">BUMIL</option>
+                                                <option value="baduta">BADUTA</option>
                                             </select>
                                         </div>
-                                    </div>
-    
+                                    </div>  
                                     <div class="form-group basic">
-                                        <label class="label">Enter Amount</label>
-                                        <div class="input-group mb-2">
-                                            <span class="input-group-text" id="basic-addona1">$</span>
-                                            <input type="text" class="form-control" placeholder="Enter an amount"
-                                                value="100">
-                                        </div>
-                                    </div>
-    
-    
-                                    <div class="form-group basic">
-                                        <button type="button" class="btn btn-primary btn-block btn-lg"
-                                            data-bs-dismiss="modal">Deposit</button>
+                                        <button type="button" class="btn btn-primary btn-block"
+                                            data-bs-dismiss="modal">UNDUH</button>
                                     </div>
                                 </form>
                             </div>
